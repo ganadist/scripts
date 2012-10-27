@@ -1,0 +1,5 @@
+set ftp:charset CP949
+set file:charset UTF-8
+set ftp:passive-mode yes
+set xfer:clobber yes
+alias l cls --sort=date --perm --date --size

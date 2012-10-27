@@ -1,0 +1,57 @@
+#!/bin/zsh
+
+if [ "$PS1" -a ! -z "$DISPLAY" ] \
+        && [ -S "$WMII_ADDRESS" -o -S /tmp/ns.$USER.${DISPLAY%.0}/wmii ] \
+        && ( wmiir ls / >/dev/null 2>&1 ) ; then
+
+        #echo "setting up wmii shortcuts" >&2
+
+        # http://www.dmo.ca/blog/20070111010218
+        function on () 
+        {
+                TAG=$1
+                shift
+                echo "NextWindowTags $TAG" | wmiir write /event
+
+                $*
+        }
+
+        # http://www.jukie.net/~bart/blog/20070112131252
+        chpwd_functions+='zsh_wmii_chpwd'
+        function zsh_wmii_chpwd () 
+        { 
+                echo "ShellChangeDir $PWD" | wmiir write /event
+        }
+
+        # ---- notify ------------------------------------------------------------
+
+        function wmiintf() {
+                local col="$1" ; shift
+                local msg="$@"
+
+                local found=$(grep "\t$col$" /usr/share/X11/rgb.txt | head -n1)
+                [ -z "$found" ] && found=$(grep "\<$col\>" /usr/share/X11/rgb.txt | head -n1)
+
+                if [ -n "$found" ] ; then
+                        local a b c d
+                        read a b c d <<<"$found"
+                        col=$(printf "#%02x%02x%02x" $a $b $c)
+                fi
+
+                echo -n "msg $col $msg" | wmiir write /event
+        }
+
+        function nn() { 
+                cmd=$1 ; shift
+                args=${1+"$@"}
+                $cmd $args
+                rc=$?
+                if [ x$rc = x0 ] ; then
+                        wmiintf "#ffffff #22AA22 #00FF00" "$cmd $args"
+                else
+                        wmiintf "#ffffff #AA2222 #FF0000" "$cmd $args"
+                fi
+        }
+
+
+fi

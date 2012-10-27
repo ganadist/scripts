@@ -1,0 +1,11 @@
+#!/bin/zsh
+
+GOROOT=$HOME/src/go/go.hg
+if [[ -d $GOROOT && -f =6c ]] ; then
+        GOOS=linux
+        GOARCH=$(uname -m)
+        [[ $GOARCH = x86_64 ]] && GOARCH=amd64
+        GOBIN=$(dirname =6c)
+        export GOROOT GOOS GOARCH GOBIN
+fi
+

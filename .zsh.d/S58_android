@@ -1,0 +1,38 @@
+#!/bin/zsh
+
+ANDROID_JAVA_HOME=$JAVA_HOME
+TOP=$HOME/src/android
+
+function envsetup() {
+	# set new top 
+	[ -f build/core/main.mk ] && export TOP=$PWD
+
+	TARGET_PRODUCT=${1:-full}
+	TARGET_BUILD_VARIANT=${2:-eng}
+
+	cd "$TOP"
+	local NEWPWD=$PWD
+	echo $PWD
+
+	# zsh workaround
+	if which setopt > /dev/null 2>&1 ; then
+		setopt nullglob
+	fi
+
+	. build/envsetup.sh
+	# enable compiler cache
+	export USE_CCACHE=1
+	# change output dir for each product and variant
+	export OUT_DIR=out-${TARGET_PRODUCT}-${TARGET_BUILD_VARIANT}
+	# setup target
+	lunch ${TARGET_PRODUCT}-${TARGET_BUILD_VARIANT}
+	# save return value
+	R=$?
+
+	# zsh workaround because pushd/popd is not valind in same directory
+	[ $OLDPWD = $NEWPWD ] || cd -
+
+	return $R
+}
+
+export ANDROID_JAVA_HOME TOP

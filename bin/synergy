@@ -1,0 +1,7 @@
+#!/bin/sh
+
+while xset q
+do
+	/usr/bin/synergys -1 -f -c /etc/synergy.conf
+	sleep 3
+done

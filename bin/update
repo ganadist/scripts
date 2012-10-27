@@ -1,0 +1,13 @@
+#!/bin/sh
+for I in *
+do
+    [ ! -d "$I" ] && continue
+    echo ""
+    echo "Update $I"
+	pushd "$I"
+    [ -d .git ] && git pull || break
+    [ -d CVS ] && cvs up || break
+    [ -d .svn ] && svn up || break
+	popd "$I"
+done
+
