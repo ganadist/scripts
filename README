@@ -1,0 +1,34 @@
+파일 내용들
+
+README:
+  지금 보고 있는 파일입니다.
+
+install:
+  여기에 포함된 파일들을 설치하는 스크립트 입니다.
+  설치했던 파일을 제거하려면 -u 옵션을 추가해서 실행하면 됩니다.
+
+.lftprc:
+  간단한 lftp의 기본 설정입니다.
+
+.pythonstartup.py:
+  python시작할 때 로딩하는 스크립트입니다.
+  현재 버젼에 따라 적당한 것을 로딩합니다.
+.pythonstartup-2.py:
+  http://www.n8gray.org/files/pythonstartup.py 에서 긁어온겁니다.
+  다음과 같은 여러가지 기능을 제공합니다.
+     tab completion
+     history
+     module edit
+     shell like functions
+  python3에 추가된 내장함수인 bin(2진수 출력)을 추가했습니다.
+.pythonstartup-3.py
+  위의 스크립트를 2to3로 변환했습니다.
+
+.vimrc
+  vim 기본 설정입니다.
+
+.zsh.d
+.zshrc
+  https://github.com/robbyrussell/oh-my-zsh 에 몇가지 기능을 덮어쓴 zsh 기본 설정입니다.
+  일부는 기능별로 .zsh.d 디렉토리의 스크립트에 구현되어 있습니다.
+

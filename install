@@ -1,0 +1,45 @@
+#!/usr/bin/env python2
+import sys, os
+import glob
+
+DIRNAME = os.path.dirname(__file__)
+SELF = __file__
+DIRNAME = os.path.abspath(DIRNAME)
+HOME = os.getenv('HOME')
+
+def func(src, removeOnly = False):
+    FILENAME = src[len(DIRNAME) + 1:]
+    DEST = os.path.join(HOME, FILENAME)
+    try:
+        if os.path.islink(DEST):
+            os.unlink(DEST)
+        elif os.path.isfile(DEST):
+            os.unlink(DEST)
+        elif os.path.isdir(DEST):
+            print 'DEST file "%s" is directory. abort.'%DEST
+            return False
+        elif not os.path.exists(DEST):
+            pass
+        else:
+            assert False, DEST
+        if not removeOnly:
+            os.symlink(src, DEST)
+    except OSError, e:
+        return False
+    return True
+
+if __name__ == '__main__':
+    UNINSTALL = '-u' in sys.argv
+    # install hidden files
+    files = glob.glob(os.path.join(DIRNAME, ".*"))
+    files += glob.glob(os.path.join(DIRNAME, "*"))
+
+    # ignore list
+    for F in ('install', 'README', '.git'):
+        files.remove(os.path.join(DIRNAME, F))
+
+    for I in files:
+        if not func(I, UNINSTALL):
+            pass
+
+# vim: set ts=4 sw=4 sts=4 et smarttab smartindent sta
