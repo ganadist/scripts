@@ -1,12 +1,16 @@
 #!/bin/zsh
 
 ANDROID_JAVA_HOME=$JAVA_HOME
-TOP=$HOME/src/android
+TOP=${TOP:-$HOME/src/hym/fsl13.3}
+
+local ANDROID_SETUP_STARTUP=$TOP/vendor/windriver/internal/build/setup.sh
+if [ -f "$ANDROID_SETUP_STARTUP" ]; then
+	source "$ANDROID_SETUP_STARTUP"
+else
 
 function envsetup() {
 	# set new top 
 	[ -f build/core/main.mk ] && export TOP=$PWD
-
 	TARGET_PRODUCT=${1:-full}
 	TARGET_BUILD_VARIANT=${2:-eng}
 
@@ -35,4 +39,8 @@ function envsetup() {
 	return $R
 }
 
-export ANDROID_JAVA_HOME TOP
+fi # [ -f "$ANDROID_SETUP_STARTUP" ]
+
+unset ANDROID_SETUP_STARTUP
+
+export ANDROID_JAVA_HOME

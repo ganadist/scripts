@@ -1,8 +1,0 @@
-#!/bin/zsh
-
-if [ -z "$JAVA_HOME" -o ! -d "$JAVA_HOME/bin/javac" ] ; then
-        java_home=$(ls -1vd /usr/lib/jvm/java-6-sun-* 2>/dev/null | tail -n1) 2>/dev/null
-        if [ -d "$java_home" ] ; then
-                export JAVA_HOME="$java_home"
-        fi
-fi
