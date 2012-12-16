@@ -30,7 +30,8 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 #plugins=(autojump gas git gnu-utils history-substring-search mercurial pip python screen ssh-agent svn vi-mode)
-plugins=(autojump gas git gnu-utils history-substring-search mercurial pip screen ssh-agent svn vi-mode)
+
+plugins=(autojump command-not-found gas gitfast gnu-utils history-substring-search mercurial pip python screen ssh-agent svn systemd vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -40,8 +41,12 @@ unsetopt chaselinks
 unsetopt share_history
 unsetopt correct_all
 
-zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=** r:|=**' 'l:|=* r:|=*'
+# bind history-substring-search
+bindkey '^[OA' history-substring-search-up
+bindkey '^[OB' history-substring-search-down
+
+#zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
+#zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=** r:|=**' 'l:|=* r:|=*'
 
 if [ -d ~/.zsh.d ]; then
   for zshrc_snipplet in ~/.zsh.d/S[0-9][0-9]*[^~] ; do
