@@ -85,8 +85,6 @@ if [ "$PS1" ]; then
         alias pcal-portrait="pcal -F 1 -m -J -p"
         alias pcal-landscape="pcal -F 1 -m -J -l"
         
-        alias grep='grep --color=auto'
-
         # alias ack='ack --color'
         export ACK_OPTIONS="--color"
 fi
