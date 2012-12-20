@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 ANDROID_JAVA_HOME=$JAVA_HOME
-TOP=${TOP:-$HOME/src/hym/fsl13.3}
+TOP=${TOP:-$HOME/src/hym/fsl13.4}
 
 local ANDROID_SETUP_STARTUP=$TOP/vendor/windriver/internal/build/setup.sh
 if [ -f "$ANDROID_SETUP_STARTUP" ]; then

@@ -41,13 +41,6 @@ unsetopt chaselinks
 unsetopt share_history
 unsetopt correct_all
 
-# bind history-substring-search
-bindkey '^[OA' history-substring-search-up
-bindkey '^[OB' history-substring-search-down
-# bind with console
-bindkey -s '^[[A' '^[OA'
-bindkey -s '^[[B' '^[OB'
-
 #zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
 #zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=** r:|=**' 'l:|=* r:|=*'
 

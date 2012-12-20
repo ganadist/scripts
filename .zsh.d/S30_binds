@@ -4,8 +4,12 @@ bindkey -v "^[[3~" delete-char
 bindkey -v "^[[5~" backward-word
 bindkey -v "^[[6~" forward-word
 
-bindkey -v "^[[A" history-beginning-search-backward
-bindkey -v "^[[B" history-beginning-search-forward
+# bind history-substring-search
+bindkey '^[OA' history-substring-search-up
+bindkey '^[OB' history-substring-search-down
+# bind with console
+bindkey -s '^[[A' '^[OA'
+bindkey -s '^[[B' '^[OB'
 
 bindkey -v "^A" beginning-of-line
 bindkey -v "^E" end-of-line
@@ -29,4 +33,4 @@ zle -N         edit-command-line
 bindkey -a 'v' edit-command-line
 
 # select keymap as emacs
-bindkey -e
+# bindkey -e
