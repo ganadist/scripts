@@ -155,5 +155,5 @@ map <F9> gd
 map <F10> ''
 map <F11> ^]
 map <F12> ^T
-map u :GundoToggle<CR>
+"map u :GundoToggle<CR>
 set tags=~/ctags/gtkctag,~/ctags/xctag,./tags,./TAGS,tags,TAGS,$ANDROID_BUILD_TOP/tags
