@@ -5,7 +5,7 @@ if [ "$PS1" ]; then
         if [ -x $HOME/bin/vim ] ; then
                 export EDITOR=$HOME/bin/vim
         elif ( which vim > /dev/null ) ; then
-                export EDITOR=vim
+                [ -z $EDITOR ] && export EDITOR=vim
         fi
 
         export PAGER=less

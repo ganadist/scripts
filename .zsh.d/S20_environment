@@ -27,7 +27,11 @@ export IRC_SERVERS_FILE="$HOME/.irc-serv"
 export CVS_RSH="ssh"
 export CVSREAD=yes
 export MANWIDTH=80
-export EDITOR=vim
+EDITOR=vim
+if ( which sublime_text > /dev/null ); then
+	[ -z $DISPLAY ] || EDITOR=sublime_text
+fi
+export EDITOR
 export VISUAL=vim
 #export CCACHE_DIR=$HOME/.ccache
 
@@ -90,7 +94,6 @@ export MPD_HOST=127.0.0.1
 export MPD_PORT=6600
 
 PYTHONSTARTUP=$HOME/.pythonstartup.py
-EDITOR=/usr/bin/vim
 #LIBXCB_ALLOW_SLOPPY_LOCK=1
 MOONLIGHT_OVERRIDES="shapecache=yes,converter=ffmpeg"
-export PYTHONSTARTUP EDITOR LIBXCB_ALLOW_SLOPPY_LOCK MOONLIGHT_OVERRIDES 
+export PYTHONSTARTUP LIBXCB_ALLOW_SLOPPY_LOCK MOONLIGHT_OVERRIDES 

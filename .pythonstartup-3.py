@@ -24,6 +24,8 @@ editorbase = EDITOR.split('/')[-1]
 if editorbase in ['nedit', 'nc', 'ncl', 'emacs', 'emacsclient', 'xemacs'] :
     # We know these editors supoprt a linenumber argument
     EDITOR = EDITOR + ' +%(lineno)s %(fname)s &'
+elif editorbase in ['sublime_text', ]:
+    EDITOR = EDITOR + ' %(fname)s:%(lineno)s &'
 elif editorbase in ['vi', 'vim', 'jed']:
     # Don't want to run vi in the background!
     # If your editor requires a terminal (e.g. joe) use this as a template
