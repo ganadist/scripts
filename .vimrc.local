@@ -1,0 +1,8 @@
+set fileencodings=ucs-bom,utf-8,default,cp949,latin-1
+set ffs=unix,dos
+
+" for filename completion 
+set wildmode=list,full
+set wildignore=*.o,*.obj,*.so*,*.a,*.class,*.jpg,*.jpeg,*.png,*.gif,*.bmp,*.ico
+set mm=1024000
+
