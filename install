@@ -1,13 +1,20 @@
 #!/usr/bin/env python2
-import sys, os
+import sys
+import os
 import glob
 
-DIRNAME = os.path.dirname(__file__)
 SELF = __file__
+DIRNAME = os.path.dirname(SELF)
 DIRNAME = os.path.abspath(DIRNAME)
 HOME = os.getenv('HOME')
 
-def func(src, removeOnly = False):
+def mkdirs(path):
+    if os.access(path, os.X_OK):
+        return
+    os.makedirs(path)
+
+
+def func(src, removeOnly=False):
     FILENAME = src[len(DIRNAME) + 1:]
     DEST = os.path.join(HOME, FILENAME)
     try:
@@ -16,7 +23,7 @@ def func(src, removeOnly = False):
         elif os.path.isfile(DEST):
             os.unlink(DEST)
         elif os.path.isdir(DEST):
-            print 'DEST file "%s" is directory. abort.'%DEST
+            print 'DEST file "%s" is directory. abort.' % DEST
             return False
         elif not os.path.exists(DEST):
             pass
@@ -24,7 +31,7 @@ def func(src, removeOnly = False):
             assert False, DEST
         if not removeOnly:
             os.symlink(src, DEST)
-    except OSError, e:
+    except OSError:
         return False
     return True
 
@@ -38,7 +45,23 @@ if __name__ == '__main__':
         cmd = 'wget --no-check-certificate https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh'
         # check ohmyzsh installation
         if not os.access(os.path.join(os.environ['HOME'], '.oh-my-zsh'), os.F_OK):
-            os.system('bash -c "%s"'%cmd)
+            os.system('bash -c "%s"' % cmd)
+        os.system('git submodule init && git submodule sync')
+        VIM_INSTALL = os.path.join(DIRNAME, 'bin', 'vim-install')
+        os.system('bash -c %s' % VIM_INSTALL)
+        FONT_CONF_D = os.path.join(HOME, '.config', 'fontconfig', 'conf.d')
+        FONTS_DIR = os.path.join(HOME, '.fonts')
+        POWERLINE_FONT_DIR = os.path.join(HOME, '.vim', 'bundle', 'powerline', 'font')
+        for filename, dst in (('10-powerline-symbols.conf', FONT_CONF_D),
+                         ('PowerlineSymbols.otf', FONTS_DIR)):
+            mkdirs(dst)
+            dst = os.path.join(dst, filename)
+            src = os.path.join(POWERLINE_FONT_DIR, filename)
+            try:
+                os.unlink(dst)
+                os.symlink(src, dst)
+            except:
+                pass
 
     # ignore list
     for F in ('install', 'README', '.git'):
