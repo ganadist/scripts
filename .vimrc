@@ -83,10 +83,38 @@ Bundle 'w0ng/vim-hybrid'
 
 filetype plugin indent on
 
+" Backups and swap
+set nobackup
+set nowritebackup
+set noswapfile
+set backupdir=$HOME/.vim/backup
+set directory=$HOME/.vim/backup
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Persistent undo
+" """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set undofile
+set undodir=$HOME/.vim/undo
+
+set undolevels=1000
+set undoreload=10000
+
+
 colorscheme hybrid
 syntax on
 
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+
+autocmd FileType make setlocal noexpandtab
+
+" Remember last location in file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal g'\"" | endif
+endif
+
+" make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
+autocmd FileType python setlocal softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " LAST SECTION
