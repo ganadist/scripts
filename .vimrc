@@ -64,7 +64,11 @@ Bundle 'tpope/vim-sensible'
 " git
 Bundle 'airblade/vim-gitgutter'
 
-"python
+" powerline
+Bundle 'Lokaltog/powerline'
+set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
+
+" python
 Bundle 'klen/python-mode'
 Bundle 'python.vim'
 Bundle 'python_match.vim'
