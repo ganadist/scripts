@@ -78,6 +78,12 @@ Bundle 'pythoncomplete'
 Bundle 'Shougo/neocomplcache'
 Bundle 'SearchComplete'
 
+" delimitMate
+" Bundle 'Raimondi/delimitMate'
+
+" tcomment
+Bundle 'tomtom/tcomment_vim'
+
 " color
 Bundle 'sjl/badwolf'
 Bundle 'altercation/vim-colors-solarized'
@@ -109,7 +115,6 @@ syntax on
 
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
-autocmd FileType make setlocal noexpandtab
 
 " Remember last location in file
 if has("autocmd")
@@ -117,8 +122,13 @@ if has("autocmd")
     \| exe "normal g'\"" | endif
 endif
 
+" makefile
+autocmd FileType make setlocal noexpandtab
 " make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
-autocmd FileType python setlocal softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
+autocmd FileType python setlocal expandtab softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79 fileformat=unix
+" c, cpp
+autocmd FileType c,cc,cpp,h,hh setlocal expandtab softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79 fileformat=unix
+autocmd FileType java setlocal expandtab softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79 fileformat=unix
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " LAST SECTION
