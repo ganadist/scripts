@@ -1,14 +1,17 @@
 # python-startup.py
-# Author: Nathan Gray, based on interactive.py by Robin Friedrich and an 
+# Author: Nathan Gray, based on interactive.py by Robin Friedrich and an
 #           evil innate desire to customize things.
 # E-Mail: n8gray@caltech.edu
 #
-# Version: 0.6 
+# Version: 0.6
 
 # These modules are always nice to have in the namespace
-import sys, os
+import os
+import sys
+import builtins
+
+
 def _notify(msg):
-    import sys
     print("-=> %s" % msg, file=sys.stderr)
 
 ##### Some settings you may want to change #####
@@ -18,10 +21,10 @@ def _notify(msg):
 #
 # %(lineno)s gets replaced by the line number.  Ditto %(fname)s the filename
 EDITOR = os.environ.get('EDITOR', 'emacs')
+editorbase = EDITOR.split('/')[-1]
 TERMINAL = 'xterm -e'
 TERMINAL = 'gnome-terminal -x'
-editorbase = EDITOR.split('/')[-1]
-if editorbase in ['nedit', 'nc', 'ncl', 'emacs', 'emacsclient', 'xemacs'] :
+if editorbase in ['nedit', 'nc', 'ncl', 'emacs', 'emacsclient', 'xemacs']:
     # We know these editors supoprt a linenumber argument
     EDITOR = EDITOR + ' +%(lineno)s %(fname)s &'
 elif editorbase in ['sublime_text', ]:
@@ -36,7 +39,7 @@ else:
 _notify("EDITOR=%s" % EDITOR)
 
 # The place to store your command history between sessions
-histfile=os.environ["HOME"] + "/.python-history"
+histfile = os.path.join(os.environ["HOME"], ".python-history")
 
 # Functions automatically added to the builtins namespace so that you can
 # use them in the debugger and other unusual environments
@@ -51,9 +54,9 @@ pre = None
 suf = None
 TERM = os.environ.get('TERM', None)
 if sys.stderr.isatty():
-    if TERM in [ 'xterm', 'vt100' ]:
-        pre = chr(1) + "\033[1;32m" + chr(2) # Turn the text green
-        suf = chr(1) + "\033[0m" + chr(2) # Reset to normal
+    if TERM in ['xterm', 'vt100']:
+        pre = chr(1) + "\033[1;32m" + chr(2)  # Turn the text green
+        suf = chr(1) + "\033[0m" + chr(2)     # Reset to normal
 
 if pre and suf:
     sys.ps1 = pre + ">>>" + suf + " "
@@ -77,10 +80,12 @@ try:
     _notify("LazyPython")
 except ImportError:
     pass
-    
+
 # Pretty-print at the command prompt for more readable dicts and lists.
 from pprint import pprint
 import builtins
+
+
 def myhook(value, show=pprint, bltin=builtins):
     if value is not None:
         bltin._ = value
@@ -90,7 +95,9 @@ _notify("pprint")
 
 try:
     # Try to set up command history completion/saving/reloading
-    import readline, atexit, rlcompleter
+    import atexit
+    import readline
+    import rlcompleter
     readline.parse_and_bind('tab: complete')
     _notify("readline")
     try:
@@ -111,41 +118,42 @@ except ImportError:
 
 ##### Make reload work recursively #####
 try:
-    import builtins, deep_reload
+    import deep_reload
     builtins.reload = deep_reload.reload
     _notify("deep reload()")
 except ImportError:
     pass
-    
+
 
 # Make an "edit" command that sends you to the right file *and line number*
 # to edit a module, class, method, or function!
 # Note that this relies on my enhanced version of which().
 def edit(object, editor=EDITOR):
-    """Edit the source file from which a module, class, method, or function 
+    """Edit the source file from which a module, class, method, or function
     was imported.
     Usage:  >>> edit(mysteryObject)
     """
-    
-    if type(object) is type(""):
-        fname = object; lineno = 1
+
+    if isinstance(object, str):
+        fname = object
+        lineno = 1
         print(editor % locals())
-        os.system( editor % locals() )
+        os.system(editor % locals())
         return
-    
+
     ret = which(object)
-    if not ret: 
+    if not ret:
         print("Can't edit that!")
         return
     fname, lineno = ret
     if fname[-4:] == '.pyc' or fname[-4:] == '.pyo':
         fname = fname[:-1]
     print(editor % locals())
-    os.system( editor % locals() )
+    os.system(editor % locals())
 
 
 ############################################################################
-# Below this is Robin Friedrich's interactive.py with some edits to decrease 
+# Below this is Robin Friedrich's interactive.py with some edits to decrease
 # namespace pollution and change the help functionality
 # NG
 #
@@ -179,7 +187,7 @@ except ImportError:
             return
         for obj in objects:
             try:
-                print('****', obj.__name__ , '****')
+                print('****', obj.__name__, '****')
                 print(obj.__doc__)
             except AttributeError:
                 print(repr(obj), 'has no __doc__ attribute')
@@ -188,27 +196,26 @@ except ImportError:
 
 home = os.path.expandvars('$HOME')
 
+
 def _glob(filenames):
     """Expand a filename or sequence of filenames with possible
     shell metacharacters to a list of valid filenames.
     Ex:  _glob(('*.py*',)) == ['able.py','baker.py','charlie.py']
     """
-    if type(filenames) is bytes:
+    if isinstance(filenames, str):
         return glob.glob(filenames)
     flist = []
     for filename in filenames:
-        globbed = glob.glob(filename)
-        if globbed:
-            for file in globbed:
-                flist.append(file)
-        else:
-            flist.append(filename)
+        for file in glob.glob(filename) or (filename,):
+            flist.append(file)
     return flist
+
 
 def _expandpath(d):
     """Convert a relative path to an absolute path.
     """
     return os.path.join(os.getcwd(), os.path.expandvars(d))
+
 
 def _ls(options, *files):
     """
@@ -217,11 +224,12 @@ def _ls(options, *files):
     Lists the given filenames, or the current directory if none are
     given, with the given options, which should be a string like '-lF'.
     """
-    if not files or len(files) == 0 :
+    if not files:
         args = os.curdir
-    else :
+    else:
         args = ' '.join(files)
     os.system('ls %s %s' % (options, args))
+
 
 def ls(*files):
     """Same as 'ls -aF'
@@ -230,12 +238,14 @@ argument)
     """
     _ls('-aF', *files)
 
+
 def ll(*files):
     """Same as 'ls -alF'
     Usage:  >>> ll(['dirname', ...])   (brackets mean [optional]
 argument)
     """
     _ls('-alF', *files)
+
 
 def lr(*files):
     """Recursive listing. same as 'ls -aRF'
@@ -245,6 +255,7 @@ argument)
     _ls('-aRF', *files)
 
 mkdir = os.mkdir
+
 
 def rm(*args):
     """Delete a file or files.
@@ -259,6 +270,7 @@ def rm(*args):
             print("%s: %s" % (detail[1], item))
 delete = rm
 
+
 def rmdir(directory):
     """Remove a directory.
     Usage:  >>> rmdir('dirname')
@@ -268,12 +280,13 @@ def rmdir(directory):
         os.rmdir(directory)
     except os.error:
         #directory wasn't empty
-        answer = input(directory+" isn't empty. Delete anyway?[n] ")
+        answer = input(directory + " isn't empty. Delete anyway?[n] ")
         if answer and answer[0] in 'Yy':
             os.system('rm -rf %s' % directory)
             print(directory + ' Deleted.')
         else:
             print(directory + ' Unharmed.')
+
 
 def mv(*args):
     """Move files within a filesystem.
@@ -293,13 +306,14 @@ def mv(*args):
     else:
         for filename in filenames[:-1]:
             try:
-                dest = filenames[-1]+'/'+filename
+                dest = os.path.join(filenames[-1], filename)
                 if not os.path.isdir(filenames[-1]):
                     print('Last argument needs to be a directory')
                     return
                 os.rename(filename, dest)
             except os.error as detail:
                 print("%s: %s" % (detail[1], filename))
+
 
 def cp(*args):
     """Copy files along with their mode bits.
@@ -319,13 +333,14 @@ def cp(*args):
     else:
         for filename in filenames[:-1]:
             try:
-                dest = filenames[-1]+'/'+filename
+                dest = os.path.join(filenames[-1], filename)
                 if not os.path.isdir(filenames[-1]):
                     print('Last argument needs to be a directory')
                     return
                 shutil.copy(filename, dest)
             except os.error as detail:
                 print("%s: %s" % (detail[1], filename))
+
 
 def cpr(src, dst):
     """Recursively copy a directory tree to a new location
@@ -334,17 +349,20 @@ def cpr(src, dst):
     """
     shutil.copytree(src, dst)
 
+
 def ln(src, dst):
     """Create a symbolic link.
     Usage:  >>> ln('existingfile', 'newlink')
     """
     os.symlink(src, dst)
 
+
 def lnh(src, dst):
     """Create a hard file system link.
     Usage:  >>> ln('existingfile', 'newlink')
     """
     os.link(src, dst)
+
 
 def pwd():
     """Print current working directory path.
@@ -353,7 +371,9 @@ def pwd():
     print(os.getcwd())
 
 cdlist = [home]
-def cd(directory = -1):
+
+
+def cd(directory=-1):
     """Change directory. Environment variables are expanded.
     Usage:
     cd('rel/$work/dir') change to a directory relative to your own
@@ -362,7 +382,7 @@ def cd(directory = -1):
     cd(int)             integer from cd() listing, jump to that directory
     """
     global cdlist
-    if type(directory) is int:
+    if isinstance(directory, int):
         if directory in range(len(cdlist)):
             cd(cdlist[directory])
             return
@@ -371,12 +391,13 @@ def cd(directory = -1):
             return
     directory = _glob(directory)[0]
     if not os.path.isdir(directory):
-        print(repr(directory)+' is not a directory')
+        print(repr(directory) + ' is not a directory')
         return
     directory = _expandpath(directory)
     if directory not in cdlist:
         cdlist.append(directory)
     os.chdir(directory)
+
 
 def env():
     """List environment variables.
@@ -389,6 +410,8 @@ def env():
     pprint(envdict)
 
 interactive_dir_stack = []
+
+
 def pushd(directory=home):
     """Place the current dir on stack and change directory.
     Usage:  >>> pushd(['dirname'])   (brackets mean [optional] argument)
@@ -397,6 +420,7 @@ def pushd(directory=home):
     global interactive_dir_stack
     interactive_dir_stack.append(os.getcwd())
     cd(directory)
+
 
 def popd():
     """Change to directory popped off the top of the stack.
@@ -410,6 +434,7 @@ def popd():
     except IndexError:
         print('Stack is empty')
 
+
 def syspath():
     """Print the Python path.
     Usage:  >>> syspath()
@@ -417,38 +442,38 @@ def syspath():
     import sys
     pprint(sys.path)
 
+
 def which(object):
-    """Print the source file from which a module, class, function, or method 
+    """Print the source file from which a module, class, function, or method
     was imported.
-    
+
     Usage:    >>> which(mysteryObject)
     Returns:  Tuple with (file_name, line_number) of source file, or None if
               no source file exists
     Alias:    whence
     """
-    object_type = type(object)
-    if object_type is types.ModuleType:
+    if isinstance(object, types.ModuleType):
         if hasattr(object, '__file__'):
             print('Module from', object.__file__)
             return (object.__file__, 1)
         else:
             print('Built-in module.')
-    elif object_type is type:
+    elif isinstance(object, type):
         if object.__module__ == '__main__':
             print('Built-in class or class loaded from $PYTHONSTARTUP')
         else:
             print('Class', object.__name__, 'from', \
                     sys.modules[object.__module__].__file__)
             # Send you to the first line of the __init__ method
-            return (sys.modules[object.__module__].__file__, 
+            return (sys.modules[object.__module__].__file__,
                     object.__init__.__func__.__code__.co_firstlineno)
-    elif object_type in (types.BuiltinFunctionType, types.BuiltinMethodType):
+    elif isinstance(object, (types.BuiltinFunctionType, types.BuiltinMethodType)):
         print("Built-in or extension function/method.")
-    elif object_type is types.FunctionType:
+    elif isinstance(object, types.FunctionType):
         print('Function from', object.__code__.co_filename)
         return (object.__code__.co_filename, object.__code__.co_firstlineno)
-    elif object_type is types.MethodType:
-        print('Method of class', object.__self__.__class__.__name__, 'from', end=' ') 
+    elif isinstance(object, types.MethodType):
+        print('Method of class', object.__self__.__class__.__name__, 'from', end=' ')
         fname = sys.modules[object.__self__.__class__.__module__].__file__
         print(fname)
         return (fname, object.__func__.__code__.co_firstlineno)
@@ -457,18 +482,6 @@ def which(object):
     return None
 whence = which
 
-"""
-def bin(val):
-	def gen_bin(v):
-		while v:
-			v, r = divmod(v, 2)
-			yield str(r)
-	return '0b' + ''.join(reversed(list(gen_bin(val))))
-	"""
-
 # Automatically add some convenience functions to __builtin__
-import builtins
 for n in autobuiltins:
-    exec('import builtins;builtins.__dict__["%s"] = %s' % (n,n), globals())
-    
-
+    exec('import builtins;builtins.__dict__["%s"] = %s' % (n, n), globals())
