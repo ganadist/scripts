@@ -91,6 +91,15 @@ Bundle 'tomasr/molokai'
 Bundle 'zaiste/Atom'
 Bundle 'w0ng/vim-hybrid'
 
+" taglist
+Bundle 'taglist.vim'
+
+" Most Recently Used
+Bundle 'mru.vim'
+
+Bundle 'terryma/vim-multiple-cursors'
+Bundle 'amix/open_file_under_cursor.vim'
+
 filetype plugin indent on
 
 " Backups and swap
