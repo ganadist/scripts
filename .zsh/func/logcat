@@ -1,0 +1,18 @@
+{
+  local MEET_ADBOPT
+  local ADBOPT
+  local LOGCATOPT
+  MEET_ADBOPT=0
+  while [ $# -ne 0 ]
+  do
+    [ $1 = "--" ] && MEET_ADBOPT=1 && shift 1&& continue
+    if [ $MEET_ADBOPT -eq 1 ]; then
+      ADBOPT="$ADBOPT $1"
+    else
+      LOGCATOPT="$LOGCATOPT $1"
+    fi
+    shift 1
+  done
+
+  adb $ADBOPT logcat -v time $LOGCATOPT
+}

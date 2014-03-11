@@ -59,7 +59,10 @@ if __name__ == '__main__':
             src = os.path.join(POWERLINE_FONT_DIR, filename)
             if os.access(dst, os.F_OK):
                 os.unlink(dst)
-            os.symlink(src, dst)
+	    try:
+                os.symlink(src, dst)
+	    except:
+	        pass
 
     # ignore list
     for F in ('install', 'README', '.git'):

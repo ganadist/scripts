@@ -1,7 +1,8 @@
 #!/bin/zsh
 
-ANDROID_JAVA_HOME=$JAVA_HOME
-TOP=${TOP:-$HOME/src/android}
+ANDROID_JAVA_HOME=/usr/lib/jvm/sun-jdk-1.6
+export ANDROID_JAVA_HOME
+TOP=${TOP:-$HOME/src/work/daudio/android}
 
 local ANDROID_SETUP_STARTUP=$TOP/vendor/windriver/internal/build/setup.sh
 if [ -f "$ANDROID_SETUP_STARTUP" ]; then
@@ -9,9 +10,16 @@ if [ -f "$ANDROID_SETUP_STARTUP" ]; then
 else
 
 function envsetup() {
+	PATH=$PATH_BASE
+	echo $PATH | grep $ANDROID_JAVA_HOME || JAVA_HOME=$ANDROID_JAVA_HOME > /dev/null
 	# set new top 
 	[ -f build/core/main.mk ] && export TOP=$PWD
-	TARGET_PRODUCT=${1:-full}
+
+	__ANDROID_EABI_TOOLCHAIN_PATH=$TOP/prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin
+	echo $PATH | grep $__ANDROID_EABI_TOOLCHAIN_PATH || PATH=$__ANDROID_EABI_TOOLCHAIN_PATH:$PATH > /dev/null
+	unset __ANDROID_EABI_TOOLCHAIN_PATH
+
+	TARGET_PRODUCT=${1:-full_daudio}
 	TARGET_BUILD_VARIANT=${2:-eng}
 
 	cd "$TOP"
@@ -36,6 +44,11 @@ function envsetup() {
 	# zsh workaround because pushd/popd is not valid in same directory
 	[ $OLDPWD = $NEWPWD ] || cd -
 
+	# zsh workaround
+	ANDROID_PRODUCT_OUT=${ANDROID_PRODUCT_OUT/*//}
+	ANDROID_HOST_OUT=${ANDROID_HOST_OUT/*//}
+	OUT=$ANDROID_PRODUCT_OUT
+
 	return $R
 }
 
@@ -43,4 +56,3 @@ fi # [ -f "$ANDROID_SETUP_STARTUP" ]
 
 unset ANDROID_SETUP_STARTUP
 
-export ANDROID_JAVA_HOME

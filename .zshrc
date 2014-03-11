@@ -56,3 +56,5 @@ fi
 [ -f ~/.dir_colors ] && eval `dircolors -b ~/.dir_colors`
 [ -f /etc/DIR_COLORS ] && eval `dircolors -b /etc/DIR_COLORS`
 
+# save path
+PATH_BASE=$PATH
