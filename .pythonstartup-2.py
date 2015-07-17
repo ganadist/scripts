@@ -54,8 +54,8 @@ suf = None
 TERM = os.environ.get('TERM', None)
 if sys.stderr.isatty():
     if TERM in ['xterm', 'vt100']:
-        pre = chr(1) + "\033[1;32m" + chr(2)  # Turn the text green
-        suf = chr(1) + "\033[0m" + chr(2)     # Reset to normal
+        pre = "\033[1;32m"  # Turn the text green
+        suf = "\033[0m"     # Reset to normal
 
 if pre and suf:
     sys.ps1 = pre + ">>>" + suf + " "

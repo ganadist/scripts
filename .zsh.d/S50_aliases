@@ -34,4 +34,5 @@ alias ymd-hms=yyyymmdd-hhmmss
 
 alias kver="wget http://www.kernel.org/kdist/finger_banner -O - 2> /dev/null"
 alias start="wine /usr/lib/wine/start.exe.so"
+alias vi='vim'
 
