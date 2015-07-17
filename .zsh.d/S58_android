@@ -1,58 +1,10 @@
-#!/bin/zsh
-
-ANDROID_JAVA_HOME=/usr/lib/jvm/sun-jdk-1.6
-export ANDROID_JAVA_HOME
-TOP=${TOP:-$HOME/src/work/daudio/android}
-
-local ANDROID_SETUP_STARTUP=$TOP/vendor/windriver/internal/build/setup.sh
-if [ -f "$ANDROID_SETUP_STARTUP" ]; then
-	source "$ANDROID_SETUP_STARTUP"
-else
-
-function envsetup() {
-	PATH=$PATH_BASE
-	echo $PATH | grep $ANDROID_JAVA_HOME || JAVA_HOME=$ANDROID_JAVA_HOME > /dev/null
-	# set new top 
-	[ -f build/core/main.mk ] && export TOP=$PWD
-
-	__ANDROID_EABI_TOOLCHAIN_PATH=$TOP/prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin
-	echo $PATH | grep $__ANDROID_EABI_TOOLCHAIN_PATH || PATH=$__ANDROID_EABI_TOOLCHAIN_PATH:$PATH > /dev/null
-	unset __ANDROID_EABI_TOOLCHAIN_PATH
-
-	TARGET_PRODUCT=${1:-full_daudio}
-	TARGET_BUILD_VARIANT=${2:-eng}
-
-	cd "$TOP"
-	local NEWPWD=$PWD
-	echo $PWD
-
-	# zsh workaround
-	if which setopt > /dev/null 2>&1 ; then
-		setopt nullglob
-	fi
-
-	. build/envsetup.sh
-	# enable compiler cache
-	export USE_CCACHE=1
-	# change output dir for each product and variant
-	export OUT_DIR=out-${TARGET_PRODUCT}-${TARGET_BUILD_VARIANT}
-	# setup target
-	lunch ${TARGET_PRODUCT}-${TARGET_BUILD_VARIANT}
-	# save return value
-	R=$?
-
-	# zsh workaround because pushd/popd is not valid in same directory
-	[ $OLDPWD = $NEWPWD ] || cd -
-
-	# zsh workaround
-	ANDROID_PRODUCT_OUT=${ANDROID_PRODUCT_OUT/*//}
-	ANDROID_HOST_OUT=${ANDROID_HOST_OUT/*//}
-	OUT=$ANDROID_PRODUCT_OUT
-
-	return $R
-}
-
-fi # [ -f "$ANDROID_SETUP_STARTUP" ]
-
-unset ANDROID_SETUP_STARTUP
-
+export ANDROID_HOME=${HOME}/src/work/adt-bundle-linux-x86_64/sdk
+export ANDROID_NDK_ROOT=${ANDROID_HOME}/ndk-bundle
+export STUDIO_JDK=/usr/lib/jvm/java-8-jdk/
+for STUDIO_HOME in .AndroidStudio1.3 .AndroidStudioPreview1.3 .AndroidStudio1.2 .AndroidStudio
+do
+  STUDIO_PROPERTIES="$HOME/$STUDIO_HOME/idea.properties"
+  [ -f $STUDIO_PROPERTIES ] && export STUDIO_PROPERTIES && break
+  unset STUDIO_PROPERTIES
+done
+unset STUDIO_HOME
