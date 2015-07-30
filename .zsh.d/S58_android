@@ -1,7 +1,7 @@
 export ANDROID_HOME=${HOME}/src/work/adt-bundle-linux-x86_64/sdk
 export ANDROID_NDK_ROOT=${ANDROID_HOME}/ndk-bundle
 export STUDIO_JDK=/usr/lib/jvm/java-8-jdk/
-for STUDIO_HOME in .AndroidStudio1.3 .AndroidStudioPreview1.3 .AndroidStudio1.2 .AndroidStudio
+for STUDIO_HOME in .AndroidStudio1.3 .AndroidStudio1.2 .AndroidStudio
 do
   STUDIO_PROPERTIES="$HOME/$STUDIO_HOME/idea.properties"
   [ -f $STUDIO_PROPERTIES ] && export STUDIO_PROPERTIES && break
