@@ -69,14 +69,19 @@ Bundle 'Lokaltog/powerline'
 set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
 
 " python
-Bundle 'klen/python-mode'
+"Bundle 'klen/python-mode'
 Bundle 'python.vim'
 Bundle 'python_match.vim'
 Bundle 'pythoncomplete'
 
+" golang
+Bundle 'fatih/vim-go'
+Bundle 'vim-jp/vim-go-extra'
+
 " completion
 Bundle 'Shougo/neocomplcache'
 Bundle 'SearchComplete'
+Bundle 'Rip-Rip/clang_complete'
 
 " delimitMate
 " Bundle 'Raimondi/delimitMate'
@@ -119,7 +124,7 @@ set undolevels=1000
 set undoreload=10000
 
 
-colorscheme hybrid
+"colorscheme hybrid
 syntax on
 
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'

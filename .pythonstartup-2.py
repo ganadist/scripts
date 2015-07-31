@@ -489,6 +489,12 @@ def bin(val):
             yield str(r)
     return '0b' + ''.join(reversed(list(gen_bin(val))))
 
+def ctime(val):
+    import time
+    timeval = int(val.split('@')[1].split('.')[0]) / 1000.0
+    timeval -= 9 * 60 * 60
+    return time.ctime(timeval)
+
 # Automatically add some convenience functions to __builtin__
 for n in autobuiltins:
     exec '__builtin__.__dict__["%s"] = %s' % (n, n) in globals()

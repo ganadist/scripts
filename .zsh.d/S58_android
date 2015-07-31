@@ -2,8 +2,10 @@ ANDROID_HOME=${HOME}/src/work/adt-bundle-linux-x86_64/sdk
 ANDROID_NDK_ROOT=${ANDROID_HOME}/ndk-bundle
 
 if [ -d /usr/lib/jvm/java-8-openjdk-amd64 ]; then
+  # ubuntu
   STUDIO_JDK=/usr/lib/jvm/java-8-openjdk-amd64
 else
+  # archlinux
   STUDIO_JDK=/usr/lib/jvm/java-8-jdk
 fi
 

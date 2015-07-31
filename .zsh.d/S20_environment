@@ -34,12 +34,13 @@ fi
 export EDITOR
 export VISUAL=vim
 #export CCACHE_DIR=$HOME/.ccache
+export USE_CCACHE=1
 
 export INPUTRC="~/.inputrc"
 export MAIL="${HOME}/mail/inbox"
 
 export RLWRAP_HOME=~/.cache/rlwrap/
-export GTK_IM_MODULE=ibus
+#export GTK_IM_MODULE=ibus
 
 export LC_MESSAGES=ko_KR.UTF-8
 export LC_ALL=ko_KR.UTF-8
@@ -102,3 +103,4 @@ MOONLIGHT_OVERRIDES="shapecache=yes,converter=ffmpeg"
 GOPATH=$HOME/src/build/go
 export PYTHONSTARTUP LIBXCB_ALLOW_SLOPPY_LOCK MOONLIGHT_OVERRIDES 
 export LD_LIBRARY_PATH FT2_SUBPIXEL_HINTING GOPATH
+

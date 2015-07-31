@@ -31,7 +31,7 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 #plugins=(autojump gas git gnu-utils history-substring-search mercurial pip python screen ssh-agent svn vi-mode)
 
-plugins=(autojump command-not-found gas gitfast gnu-utils history-substring-search mercurial pip python repo screen svn sudo systemd vi-mode)
+plugins=(adb archlinux autojump command-not-found docker gitfast history-substring-search mercurial pip python repo screen svn sublime sudo systemd vi-mode vim-interaction z)
 [ -z $SSH_AUTH_SOCK ] && plugins=($plugins ssh-agent)
 
 source $ZSH/oh-my-zsh.sh
