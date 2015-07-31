@@ -1,6 +1,12 @@
-export ANDROID_HOME=${HOME}/src/work/adt-bundle-linux-x86_64/sdk
-export ANDROID_NDK_ROOT=${ANDROID_HOME}/ndk-bundle
-export STUDIO_JDK=/usr/lib/jvm/java-8-jdk/
+ANDROID_HOME=${HOME}/src/work/adt-bundle-linux-x86_64/sdk
+ANDROID_NDK_ROOT=${ANDROID_HOME}/ndk-bundle
+
+if [ -d /usr/lib/jvm/java-8-openjdk-amd64 ]; then
+  STUDIO_JDK=/usr/lib/jvm/java-8-openjdk-amd64
+else
+  STUDIO_JDK=/usr/lib/jvm/java-8-jdk
+fi
+
 for STUDIO_HOME in .AndroidStudio1.3 .AndroidStudio1.2 .AndroidStudio
 do
   STUDIO_PROPERTIES="$HOME/$STUDIO_HOME/idea.properties"
@@ -8,3 +14,6 @@ do
   unset STUDIO_PROPERTIES
 done
 unset STUDIO_HOME
+IBUS_ENABLE_SYNC_MODE=1
+
+export ANDROID_HOME ANDROID_NDK_ROOT STUDIO_JDK IBUS_ENABLE_SYNC_MODE

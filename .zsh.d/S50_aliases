@@ -34,5 +34,4 @@ alias ymd-hms=yyyymmdd-hhmmss
 
 alias kver="wget http://www.kernel.org/kdist/finger_banner -O - 2> /dev/null"
 alias start="wine /usr/lib/wine/start.exe.so"
-alias vi='vim'
-
+alias miniterm="miniterm.py -p /dev/ttyUSB0 -b 115200 --lf"
