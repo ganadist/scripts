@@ -1,0 +1,12 @@
+#!/bin/zsh
+
+if which java-config > /dev/null 2>&1 ; then
+    # gentoo
+    java_home=$(java-config -O 2>/dev/null | tail -n1) 2>/dev/null
+elif [ -z "$JAVA_HOME" -o ! -d "$JAVA_HOME/bin/javac" ] ; then
+    # debian or ubuntu
+    java_home=$(unsetopt nullglob;ls -1vd /usr/lib/jvm/java-6-sun-* 2>/dev/null | tail -n1) > /dev/null
+fi
+[ -d "$java_home" ] && export JAVA_HOME="$java_home"
+unset java_home
+

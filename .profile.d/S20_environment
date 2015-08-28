@@ -28,7 +28,7 @@ export CVS_RSH="ssh"
 export CVSREAD=yes
 export MANWIDTH=80
 EDITOR=vim
-if ( which sublime_text > /dev/null ); then
+if ( which sublime_text > /dev/null 2>&1 ); then
 	[ -z $DISPLAY ] || EDITOR=sublime_text
 fi
 export EDITOR
