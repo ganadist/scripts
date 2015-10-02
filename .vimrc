@@ -99,6 +99,8 @@ Bundle 'w0ng/vim-hybrid'
 " taglist
 Bundle 'taglist.vim'
 
+Bundle 'mileszs/ack.vim'
+
 " Most Recently Used
 Bundle 'mru.vim'
 
@@ -151,3 +153,4 @@ autocmd FileType java setlocal expandtab softtabstop=4 tabstop=4 shiftwidth=4 te
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
+set wrap

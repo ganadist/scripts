@@ -1,0 +1,2 @@
+export PYTHONSTARTUP=$HOME/.pythonstartup.py
+export PYTHONUSERBASE=$HOME

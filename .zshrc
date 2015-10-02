@@ -31,7 +31,7 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 #plugins=(autojump gas git gnu-utils history-substring-search mercurial pip python screen ssh-agent svn vi-mode)
 
-plugins=(adb archlinux autojump command-not-found docker gitfast history-substring-search mercurial pip python repo screen svn sublime sudo systemd vi-mode vim-interaction z)
+plugins=(adb archlinux autojump command-not-found docker gitfast history-substring-search mercurial pip python repo screen svn sudo systemd vi-mode vim-interaction z)
 [ -z $SSH_AUTH_SOCK ] && plugins=($plugins ssh-agent)
 
 source $ZSH/oh-my-zsh.sh
@@ -55,6 +55,7 @@ fi
 # colors for ls, etc.  Prefer ~/.dir_colors #64489
 [ -f ~/.dir_colors ] && eval `dircolors -b ~/.dir_colors`
 [ -f /etc/DIR_COLORS ] && eval `dircolors -b /etc/DIR_COLORS`
+[ -f $HOME/.profile ] && source $HOME/.profile
 
 # save path
 PATH_BASE=$PATH

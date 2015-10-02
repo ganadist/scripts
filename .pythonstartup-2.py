@@ -9,6 +9,8 @@
 import os
 import sys
 
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 def _notify(msg):
     print >>sys.stderr, "-=> %s" % msg
