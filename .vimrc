@@ -61,12 +61,52 @@ autocmd BufReadPost fugitive://* set bufhidden=delete
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Bundle 'tpope/vim-sensible'
 
+" filemanagement
+Bundle 'scrooloose/nerdtree'
+Bundle 'Xuyuanp/nerdtree-git-plugin'
+Bundle 'jistr/vim-nerdtree-tabs'
+map <Leader>n <plug>NERDTreeTabsToggle<CR>
+Bundle 'kien/ctrlp.vim'
+
 " git
 Bundle 'airblade/vim-gitgutter'
 
 " powerline
-Bundle 'Lokaltog/powerline'
-set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
+"Bundle 'powerline/powerline'
+"set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
+Bundle 'bling/vim-airline'
+let g:airline#extensions#tabline#enabled=1
+let g:airline_detect_modified=1
+let g:airline_detect_paste=1
+let g:airline_powerline_fonts=0
+let g:airline_inactive_collapse=1
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" powerline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
 
 " python
 "Bundle 'klen/python-mode'
@@ -80,14 +120,14 @@ Bundle 'vim-jp/vim-go-extra'
 
 " completion
 Bundle 'Shougo/neocomplcache'
+"Bundle 'Rip-Rip/clang_complete'
+Bundle 'tpope/vim-surround'
+Bundle 'scrooloose/nerdcommenter'
 Bundle 'SearchComplete'
-Bundle 'Rip-Rip/clang_complete'
+Bundle 'easymotion/vim-easymotion'
 
 " delimitMate
 " Bundle 'Raimondi/delimitMate'
-
-" tcomment
-Bundle 'tomtom/tcomment_vim'
 
 " color
 Bundle 'sjl/badwolf'
@@ -96,15 +136,14 @@ Bundle 'tomasr/molokai'
 Bundle 'zaiste/Atom'
 Bundle 'w0ng/vim-hybrid'
 
-" taglist
-Bundle 'taglist.vim'
+" tagbar
+Bundle 'majutsushi/tagbar'
 
 Bundle 'mileszs/ack.vim'
 
 " Most Recently Used
 Bundle 'mru.vim'
 
-Bundle 'terryma/vim-multiple-cursors'
 Bundle 'amix/open_file_under_cursor.vim'
 
 filetype plugin indent on
