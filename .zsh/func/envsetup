@@ -1,33 +1,40 @@
 # vim: set syntax=sh
 {
 
-ANDROID_JAVA_HOME=/usr/lib/jvm/java-6-jdk
-
 case "$1" in
   "ibox")
     TOP=$HOME/src/work/hym/ibox
+    ANDROID_JAVA_HOME=/usr/lib/jvm/java-6-jdk
+    shift 1
+    ;;
+  "daudio")
+    TOP=$HOME/src/work/daudio/android
+    ANDROID_JAVA_HOME=/usr/lib/jvm/java-6-jdk
+    shift 1
+    ;;
+  "light")
+    TOP=$HOME/src/work/lightening
+    ANDROID_JAVA_HOME=/usr/lib/jvm/java-6-jdk
+    shift 1
+    ;;
+  "radnav")
+    TOP=$HOME/src/work/radnav
+    ANDROID_JAVA_HOME=/usr/lib/jvm/java-6-jdk
     shift 1
     ;;
   "aosp")
     TOP=$HOME/src/work/aosp/android
+    ANDROID_JAVA_HOME=/usr/lib/jvm/java-8-openjdk
+    shift 1
+    ;;
+  "mako")
+    TOP=$HOME/src/work/aosp/mako
     ANDROID_JAVA_HOME=/usr/lib/jvm/java-7-openjdk
     shift 1
     ;;
   "cm")
     TOP=$HOME/src/work/aosp/cm
     ANDROID_JAVA_HOME=/usr/lib/jvm/java-7-openjdk
-    shift 1
-    ;;
-  "daudio")
-    TOP=$HOME/src/work/daudio/android
-    shift 1
-    ;;
-  "light")
-    TOP=$HOME/src/work/lightening
-    shift 1
-    ;;
-  "radnav")
-    TOP=$HOME/src/work/radnav
     shift 1
     ;;
   *)
@@ -38,6 +45,8 @@ case "$1" in
     fi
     ;;
 esac
+
+echo $TOP
 
 case "$TOP" in
   "$HOME/src/work/daudio/android")
@@ -58,6 +67,15 @@ case "$TOP" in
     TARGET_BUILD_VARIANT=${1:-userdebug}
     [ $# -ge 1 ] && shift 1
     ANDROID_JAVA_HOME=/usr/lib/jvm/java-7-openjdk/
+    export LEX=flex
+    ;;
+  "$HOME/src/work/aosp/mako")
+    TARGET_PRODUCT=${1:-occam}
+    [ $# -ge 1 ] && shift 1
+    TARGET_BUILD_VARIANT=${1:-user}
+    [ $# -ge 1 ] && shift 1
+    ANDROID_JAVA_HOME=/usr/lib/jvm/java-7-openjdk/
+    export LEX=flex
     ;;
   "$HOME/src/work/aosp/cm")
     TARGET_PRODUCT=${1:-full}
@@ -110,6 +128,7 @@ export USE_CCACHE=1
 # change output dir for each product and variant
 export OUT_DIR=${OUT_DIR:-out-${TARGET_PRODUCT}-${TARGET_BUILD_VARIANT}}
 # setup target
+echo run lunch ${TARGET_PRODUCT}-${TARGET_BUILD_VARIANT}
 lunch ${TARGET_PRODUCT}-${TARGET_BUILD_VARIANT}
 # save return value
 local R=$?

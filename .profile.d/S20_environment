@@ -50,31 +50,8 @@ export LC_ALL=ko_KR.UTF-8
 if [ $UID -eq 0 ]; then
         PATH=~root/bin:$PATH
 else
-        path=(${HOME}/bin ${HOME}/usr/bin $path)
-
-        if ( ${HOME}/usr/bin/git version >/dev/null 2>/dev/null ) ; then
-
-                #echo "using git from ~/usr/bin/ - " $( ${HOME}/usr/bin/git version )
-
-                export MANPATH="${HOME}/usr/share/man/:${MANPATH}:/usr/local/man/"
-                export LD_RUN_PATH="$HOME/usr/lib:${LD_RUN_PATH}"
-                export LD_LIBRARY_PATH="$HOME/usr/lib:${LD_LIBRARY_PATH}"
-
-                base="${HOME}/usr"
-                for t in "bin" "libexec/git-core" ; do
-                        p="$base/$t"
-                        if [ -x "$p/git-cat-file" ] ; then
-                                export GIT_EXEC_PATH=$p
-                        fi
-                done
-
-        fi
+        PATH=${HOME}/bin:$PATH
 fi
-
-path=($path /bin:/usr/bin /usr/local/bin /sbin:/usr/sbin /usr/local/sbin /usr/X11R6/bin)
-
-# zsh functions
-fpath=($HOME/.zsh/func $fpath)
 
 # less options
 LESS=FRSX
@@ -99,6 +76,6 @@ FT2_SUBPIXEL_HINTING=1
 LD_LIBRARY_PATH=$HOME/lib:$LD_LIBRARY_PATH
 #LIBXCB_ALLOW_SLOPPY_LOCK=1
 MOONLIGHT_OVERRIDES="shapecache=yes,converter=ffmpeg"
-export LIBXCB_ALLOW_SLOPPY_LOCK MOONLIGHT_OVERRIDES 
-export LD_LIBRARY_PATH FT2_SUBPIXEL_HINTING
+export PYTHONSTARTUP LIBXCB_ALLOW_SLOPPY_LOCK MOONLIGHT_OVERRIDES 
+export LD_LIBRARY_PATH FT2_SUBPIXEL_HINTING PATH
 

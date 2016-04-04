@@ -1,5 +1,6 @@
-ANDROID_HOME=${HOME}/src/work/adt-bundle-linux-x86_64/sdk
+ANDROID_HOME=${HOME}/src/work/tools/adt-bundle-linux-x86_64/sdk
 ANDROID_NDK_ROOT=${ANDROID_HOME}/ndk-bundle
+ANDROID_NDK_HOME=$ANDROID_NDK_ROOT
 
 if [ -d /usr/lib/jvm/java-8-openjdk-amd64 ]; then
   # ubuntu
@@ -9,12 +10,24 @@ else
   STUDIO_JDK=/usr/lib/jvm/java-8-jdk
 fi
 
-for STUDIO_HOME in .AndroidStudio1.4 .AndroidStudio1.3 .AndroidStudio
-do
-  STUDIO_PROPERTIES="$HOME/$STUDIO_HOME/idea.properties"
-  [ -f $STUDIO_PROPERTIES ] && export STUDIO_PROPERTIES && break
-  unset STUDIO_PROPERTIES
-done
-unset STUDIO_HOME
+find_studio_properties() {
+  local VER=(1.5 2.0 2.1)
+  local PLATFORM=(.AndroidStudio .AndroidStudioPreview)
+  local STUDIO_HOME P V
+  for P in ${PLATFORM[@]}
+  do
+    for V in ${VER[@]}
+    do
+      STUDIO_HOME=${P}${V}
+      STUDIO_PROPERTIES="$HOME/$STUDIO_HOME/idea.properties"
+      [ -f ${STUDIO_PROPERTIES} ] && export STUDIO_PROPERTIES && break
+      unset STUDIO_PROPERTIES
+    done
+  done
+}
 
-export ANDROID_HOME ANDROID_NDK_ROOT STUDIO_JDK
+#IBUS_ENABLE_SYNC_MODE=1
+
+find_studio_properties
+
+export ANDROID_HOME ANDROID_NDK_ROOT ANDROID_NDK_HOME STUDIO_JDK
