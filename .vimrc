@@ -2,21 +2,15 @@ set nocompatible
 filetype on
 filetype off
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+call plug#begin('~/.vim/plugged')
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Include user's local vim bundles
 " You can also override mapleader here
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if filereadable(expand("~/.vim_bundles.local"))
-  source ~/.vim_bundles.local
-endif
-
-" let Vundle manage Vundle
-" required! 
-Bundle 'gmarik/vundle'
-
+"if filereadable(expand("~/.vim_bundles.local"))
+"  source ~/.vim_bundles.local
+"endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Fugitive
@@ -24,7 +18,7 @@ Bundle 'gmarik/vundle'
 " Git in vim, use ,gs for git status then - to stage then C to commit
 " check :help Gstatus for more keys
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-Bundle 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 
 map <leader>gs :Gstatus<cr>
 map <leader>gc :Gcommit<cr>
@@ -59,22 +53,22 @@ autocmd BufReadPost fugitive://* set bufhidden=delete
 "
 " Defaults everyone can agree on
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-Bundle 'tpope/vim-sensible'
+Plug 'tpope/vim-sensible'
 
 " filemanagement
-Bundle 'scrooloose/nerdtree'
-Bundle 'Xuyuanp/nerdtree-git-plugin'
-Bundle 'jistr/vim-nerdtree-tabs'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'jistr/vim-nerdtree-tabs'
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
-Bundle 'kien/ctrlp.vim'
+Plug 'kien/ctrlp.vim'
 
 " git
-Bundle 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 
 " powerline
 "Bundle 'powerline/powerline'
 "set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
-Bundle 'bling/vim-airline'
+Plug 'bling/vim-airline'
 let g:airline#extensions#tabline#enabled=1
 let g:airline_detect_modified=1
 let g:airline_detect_paste=1
@@ -110,41 +104,44 @@ let g:airline_symbols.linenr = ''
 
 " python
 "Bundle 'klen/python-mode'
-Bundle 'python.vim'
-Bundle 'python_match.vim'
-Bundle 'pythoncomplete'
+Plug 'python.vim'
+Plug 'python_match.vim'
+Plug 'pythoncomplete'
 
 " golang
-Bundle 'fatih/vim-go'
-Bundle 'vim-jp/vim-go-extra'
+Plug 'fatih/vim-go'
+Plug 'vim-jp/vim-go-extra'
 
 " completion
-Bundle 'Shougo/neocomplcache'
+Plug 'Shougo/neocomplcache'
 "Bundle 'Rip-Rip/clang_complete'
-Bundle 'tpope/vim-surround'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'SearchComplete'
-Bundle 'easymotion/vim-easymotion'
+Plug 'tpope/vim-surround'
+Plug 'scrooloose/nerdcommenter'
+Plug 'SearchComplete'
+Plug 'easymotion/vim-easymotion'
 
 " delimitMate
 " Bundle 'Raimondi/delimitMate'
 
 " color
-Bundle 'sjl/badwolf'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'tomasr/molokai'
-Bundle 'zaiste/Atom'
-Bundle 'w0ng/vim-hybrid'
+Plug 'sjl/badwolf'
+Plug 'altercation/vim-colors-solarized'
+Plug 'tomasr/molokai'
+Plug 'zaiste/Atom'
+Plug 'w0ng/vim-hybrid'
 
 " tagbar
-Bundle 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 
-Bundle 'mileszs/ack.vim'
+Plug 'mileszs/ack.vim'
 
 " Most Recently Used
-Bundle 'mru.vim'
+Plug 'mru.vim'
 
-Bundle 'amix/open_file_under_cursor.vim'
+Plug 'amix/open_file_under_cursor.vim'
+
+" Add plugins to &runtimepath
+call plug#end()
 
 filetype plugin indent on
 
@@ -182,7 +179,7 @@ autocmd FileType make setlocal noexpandtab
 " make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
 autocmd FileType python setlocal expandtab softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79 fileformat=unix
 " c, cpp
-autocmd FileType c,cc,cpp,h,hh setlocal expandtab softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79 fileformat=unix
+autocmd FileType c,cc,cpp,h,hh setlocal textwidth=79 fileformat=unix
 autocmd FileType java setlocal expandtab softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79 fileformat=unix
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

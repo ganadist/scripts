@@ -1,2 +1,2 @@
 #!/bin/sh
-exec vim +BundleInstall +qall
+exec vim +PlugUpgrade +PlugUpdate +qall
