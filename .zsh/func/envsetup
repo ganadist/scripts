@@ -1,105 +1,87 @@
-# vim: set syntax=sh
+# vim: ts=2 sw=2 nocindent expandtab syntax=sh
 {
 
-case "$1" in
-  "ibox")
-    TOP=$HOME/src/work/hym/ibox
-    ANDROID_JAVA_HOME=/usr/lib/jvm/java-6-jdk
-    shift 1
+find_top() {
+  local P=$PWD
+  while true
+  do
+    #echo "P : $P"
+    [ -f $P/.repo/manifest.xml ] && echo $P && return
+    P=$(dirname ${P})
+    [ ${P} = '/' ] && break
+  done
+}
+
+if [ -f .repo/manifest.xml ]; then
+  TOP=$PWD
+else
+  case "$1" in
+    "aosp")
+      TOP=$HOME/src/work/aosp/android
+      ;;
+    "mako")
+      TOP=$HOME/src/work/aosp/mako
+      ;;
+    "hammerhead")
+      TOP=$HOME/src/work/aosp/hammerhead
+      ;;
+    "pfxos")
+      TOP=$HOME/src/work/aosp/pfxos_mrb
+      ;;
+    *)
+      TOP=$(find_top)
+      if [ -z $TOP ]; then
+        echo "Please assign project"
+        unset TOP
+        return 1
+      fi
+      ;;
+  esac
+  shift 1
+fi
+
+local PLATFORM_VERSION_LINE=$(grep "PLATFORM_SDK_VERSION :="  "${TOP}/build/core/version_defaults.mk")
+local VERSION_SDK=${PLATFORM_VERSION_LINE##*:= }
+
+case ${VERSION_SDK} in
+  9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20)
+    # Sun JDK 6
+    ANDROID_JAVA_HOME=/usr/lib/jvm/java-6-jdk/
     ;;
-  "daudio")
-    TOP=$HOME/src/work/daudio/android
-    ANDROID_JAVA_HOME=/usr/lib/jvm/java-6-jdk
-    shift 1
+  21 | 22 | 23)
+    # OpenJDK 7
+    ANDROID_JAVA_HOME=/usr/lib/jvm/java-7-openjdk/
+    export LEX=flex
     ;;
-  "light")
-    TOP=$HOME/src/work/lightening
-    ANDROID_JAVA_HOME=/usr/lib/jvm/java-6-jdk
-    shift 1
-    ;;
-  "radnav")
-    TOP=$HOME/src/work/radnav
-    ANDROID_JAVA_HOME=/usr/lib/jvm/java-6-jdk
-    shift 1
-    ;;
-  "aosp")
-    TOP=$HOME/src/work/aosp/android
-    ANDROID_JAVA_HOME=/usr/lib/jvm/java-8-openjdk
-    shift 1
-    ;;
-  "mako")
-    TOP=$HOME/src/work/aosp/mako
-    ANDROID_JAVA_HOME=/usr/lib/jvm/java-7-openjdk
-    shift 1
-    ;;
-  "cm")
-    TOP=$HOME/src/work/aosp/cm
-    ANDROID_JAVA_HOME=/usr/lib/jvm/java-7-openjdk
-    shift 1
+  24 | 25)
+    # OpenJDK 8
+    ANDROID_JAVA_HOME=/usr/lib/jvm/java-8-openjdk/
+    export LEX=flex
     ;;
   *)
-    if [ -f $PWD/.repo/manifest.xml ]; then
-      TOP=$PWD
-    else
-      TOP=${TOP:-$HOME/src/work/daudio/android}
-    fi
-    ;;
+   echo "API Level \"${VERSION_SDK}\" is not supported"
+   return 1
+   ;;
 esac
 
-echo $TOP
+parse_product() {
+    TARGET_PRODUCT=${3:-$1}
+    TARGET_BUILD_VARIANT=${4:-$2}
+}
 
 case "$TOP" in
-  "$HOME/src/work/daudio/android")
-    TARGET_PRODUCT=${1:-lf_us}
-    [ $# -ge 1 ] && shift 1
-    TARGET_BUILD_VARIANT=${1:-eng}
-    [ $# -ge 1 ] && shift 1
-    ;;
-  "$HOME/src/work/hym/ibox")
-    TARGET_PRODUCT=${1:-st_ps_kr}
-    [ $# -ge 1 ] && shift 1
-    TARGET_BUILD_VARIANT=${1:-eng}
-    [ $# -ge 1 ] && shift 1
-    ;;
   "$HOME/src/work/aosp/android")
-    TARGET_PRODUCT=${1:-hammerhead}
-    [ $# -ge 1 ] && shift 1
-    TARGET_BUILD_VARIANT=${1:-userdebug}
-    [ $# -ge 1 ] && shift 1
-    ANDROID_JAVA_HOME=/usr/lib/jvm/java-7-openjdk/
-    export LEX=flex
+    parse_product hammerhead userdebug "$@"
+    ;;
+  "$HOME/src/work/aosp/hammerhead")
+    parse_product hammerhead user "$@"
     ;;
   "$HOME/src/work/aosp/mako")
-    TARGET_PRODUCT=${1:-occam}
-    [ $# -ge 1 ] && shift 1
-    TARGET_BUILD_VARIANT=${1:-user}
-    [ $# -ge 1 ] && shift 1
-    ANDROID_JAVA_HOME=/usr/lib/jvm/java-7-openjdk/
-    export LEX=flex
+    parse_product occam user "$@"
     ;;
-  "$HOME/src/work/aosp/cm")
-    TARGET_PRODUCT=${1:-full}
-    [ $# -ge 1 ] && shift 1
-    TARGET_BUILD_VARIANT=${1:-userdebug}
-    [ $# -ge 1 ] && shift 1
-    ANDROID_JAVA_HOME=/usr/lib/jvm/java-7-openjdk/
-    ;;
-  "$HOME/src/work/lightening")
-    TARGET_PRODUCT=${1:-lightening_on_sabreauto}
-    [ $# -ge 1 ] && shift 1
-    TARGET_BUILD_VARIANT=${1:-eng}
-    [ $# -ge 1 ] && shift 1
-    export HOST_CC=gcc-4.6.3
-    export HOST_CXX=g++-4.6.3
-    ;;
-  "$HOME/src/work/radnav")
-    TARGET_PRODUCT=${1:-mm2014_gen10}
-    [ $# -ge 1 ] && shift 1
-    TARGET_BUILD_VARIANT=${1:-eng}
-    [ $# -ge 1 ] && shift 1
-    export HOST_CC=gcc-4.6.3
-    export HOST_CXX=g++-4.6.3
-    ;;
+  "$HOME/src/work/aosp/honda" | "$HOME/src/work/aosp/pfxos" | "$HOME/src/work/aosp/pfxos_mrb")
+    parse_product pfxos_base userdebug "$@"
+  ;;
 
   *)
     ;;
@@ -107,11 +89,6 @@ esac
 
 PATH=$PATH_BASE
 echo $PATH | grep $ANDROID_JAVA_HOME || JAVA_HOME=$ANDROID_JAVA_HOME > /dev/null
-
-__ANDROID_EABI_TOOLCHAIN_PATH=$TOP/prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin
-echo $PATH | grep $__ANDROID_EABI_TOOLCHAIN_PATH || PATH=$__ANDROID_EABI_TOOLCHAIN_PATH:$PATH > /dev/null
-unset __ANDROID_EABI_TOOLCHAIN_PATH
-
 
 cd "$TOP"
 local NEWPWD=$PWD
@@ -123,15 +100,20 @@ if which setopt > /dev/null 2>&1 ; then
 fi
 
 . build/envsetup.sh
+
 # enable compiler cache
 export USE_CCACHE=1
+
 # change output dir for each product and variant
-export OUT_DIR=${OUT_DIR:-out-${TARGET_PRODUCT}-${TARGET_BUILD_VARIANT}}
+export OUT_DIR=out-${TARGET_PRODUCT}-${TARGET_BUILD_VARIANT}
+
 # setup target
 echo run lunch ${TARGET_PRODUCT}-${TARGET_BUILD_VARIANT}
 lunch ${TARGET_PRODUCT}-${TARGET_BUILD_VARIANT}
+
 # save return value
 local R=$?
+[ $R -ne 0 ] && unset OUT_DIR
 
 # zsh workaround because pushd/popd is not valid in same directory
 [ $OLDPWD = $NEWPWD ] || cd -
