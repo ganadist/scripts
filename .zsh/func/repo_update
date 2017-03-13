@@ -1,0 +1,20 @@
+DST_BRANCH=$(date "+%m%d")_build
+shift 1
+for D in $@
+do
+  pushd $D
+  git stash
+  popd
+done
+
+repo sync -j4
+repo start $DST_BRANCH
+
+for D in $@
+do
+  pushd $D
+  git stash pop
+  popd
+done
+
+

@@ -1,1 +1,2 @@
-find . -name .repo -prune -o -name .git -prune -o -type f \( -name '*.c' -o -name '*.cc' -o -name '*.cpp' -o -name '*.h' \) -print0 | xargs -0 grep --color -n "$@"
+# vim: ts=2 sw=2 sts=2 syntax=sh
+find . -name .repo -prune -o -name .git -prune -o -path "./out*" -prune -o -type f \( -name '*.c' -o -name '*.cc' -o -name '*.cpp' -o -name '*.h' -o -name '*.hpp' \) -print0 | xargs -0 grep --color -n "$@"

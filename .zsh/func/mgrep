@@ -1,9 +1,3 @@
-case `uname -s` in
-	Darwin)
-		find -E . -name .repo -prune -o -name .git -prune -o -path ./out -prune -o -type f -iregex '.*/(Kconfig|Makefile|Makefile\..*|.*\.make|.*\.mak|.*\.mk)' -print0 | xargs -0 grep --color -n "$@"
-		;;
-	*)
-		find . -name .repo -prune -o -name .git -prune -o -path ./out -prune -o -regextype posix-egrep -iregex '(.*\/Makefile|.*\/Makefile\..*|.*\.make|.*\.mak|.*\.mk)' -type f -print0 | xargs -0 grep --color -n "$@"
-		;;
-esac
-
+# vim: ts=2 sw=2 sts=2 syntax=sh
+find . -name .repo -prune -o -name .git -prune -o -path "./out*" -prune -o -regextype posix-egrep -iregex '(.*\/Makefile|.*\/Makefile\..*|.*\.make|.*\.mak|.*\.mk|.*\.bp|.*\/Kconfig)' -type f \
+                -exec grep --color -n "$@" {} +

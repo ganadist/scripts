@@ -1,9 +1,4 @@
-case `uname -s` in
-	Darwin)
-		find -E . -name .repo -prune -o -name .git -prune -o -type f -iregex '.*\.(c|h|cpp|S|java|xml)' -print0 | xargs -0 grep --color -n -i "$@"
-		;;
-	*)
-		find . -name .repo -prune -o -name .git -prune -o -regextype posix-egrep -iregex '.*\.(c|h|cpp|S|java|xml)' -type f -print0 | xargs -0 grep --color -n -i "$@"
-		;;
-esac
+# vim: ts=2 sw=2 sts=2 syntax=sh
+find . -name .repo -prune -o -name .git -prune -o -path "./out*" -prune -o -regextype posix-egrep -iregex '.*\.(c|h|cpp|S|java|xml)' -type f \
+                -exec grep --color -n -i "$@" {} +
 
