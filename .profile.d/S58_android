@@ -1,6 +1,7 @@
 ANDROID_HOME=${HOME}/src/work/tools/adt-bundle-linux-x86_64/sdk
 ANDROID_NDK_ROOT=${ANDROID_HOME}/ndk-bundle
 ANDROID_NDK_HOME=$ANDROID_NDK_ROOT
+ANDROID_EMULATOR_USE_SYSTEM_LIBS=1
 
 if [ -d /usr/lib/jvm/java-8-openjdk-amd64 ]; then
   # ubuntu
@@ -31,3 +32,4 @@ find_studio_properties() {
 find_studio_properties
 
 export ANDROID_HOME ANDROID_NDK_ROOT ANDROID_NDK_HOME STUDIO_JDK
+export ANDROID_EMULATOR_USE_SYSTEM_LIBS
