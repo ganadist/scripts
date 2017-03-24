@@ -1,4 +1,4 @@
-ANDROID_HOME=${HOME}/src/work/tools/adt-bundle-linux-x86_64/sdk
+ANDROID_HOME=${HOME}/tools/adt-bundle-linux-x86_64/sdk
 ANDROID_NDK_ROOT=${ANDROID_HOME}/ndk-bundle
 ANDROID_NDK_HOME=$ANDROID_NDK_ROOT
 ANDROID_EMULATOR_USE_SYSTEM_LIBS=1
@@ -12,7 +12,7 @@ else
 fi
 
 find_studio_properties() {
-  local VER=(1.5 2.0 2.1)
+  local VER=(2.2 2.3 2.4 2.5)
   local PLATFORM=(.AndroidStudio .AndroidStudioPreview)
   local STUDIO_HOME P V
   for P in ${PLATFORM[@]}
