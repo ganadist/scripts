@@ -110,7 +110,12 @@ Plug 'pythoncomplete'
 
 " golang
 Plug 'fatih/vim-go'
-Plug 'vim-jp/vim-go-extra'
+"Plug 'vim-jp/vim-go-extra'
+Plug 'google/vim-ft-go'
+
+" Bazel
+Plug 'bazelbuild/vim-bazel'
+Plug 'bazelbuild/vim-ft-bzl'
 
 " completion
 Plug 'Shougo/neocomplcache'
@@ -120,15 +125,28 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'SearchComplete'
 Plug 'easymotion/vim-easymotion'
 
+Plug 'google/vim-maktaba'
+" Strongly recommended: easy configuration of maktaba plugins.
+Plug 'google/vim-glaive'
+
+Plug 'google/vim-codefmt'
+Plug 'google/vim-codereview'
+Plug 'google/vim-coverage'
+Plug 'google/vim-ft-vroom'
+Plug 'google/vim-searchindex'
+Plug 'google/vim-selector'
+Plug 'google/vim-syncopate'
+
 " delimitMate
 " Bundle 'Raimondi/delimitMate'
 
 " color
-Plug 'sjl/badwolf'
-Plug 'altercation/vim-colors-solarized'
-Plug 'tomasr/molokai'
-Plug 'zaiste/Atom'
-Plug 'w0ng/vim-hybrid'
+"Plug 'sjl/badwolf'
+"Plug 'altercation/vim-colors-solarized'
+"Plug 'tomasr/molokai'
+"Plug 'zaiste/Atom'
+"Plug 'w0ng/vim-hybrid'
+Plug 'google/vim-colorscheme-primary'
 
 " tagbar
 Plug 'majutsushi/tagbar'
@@ -142,6 +160,20 @@ Plug 'amix/open_file_under_cursor.vim'
 
 " Add plugins to &runtimepath
 call plug#end()
+
+
+" the glaive#Install() should go after the "call vundle#end()"
+call glaive#Install()
+" Optional: Enable codefmt's default mappings on the <Leader>= prefix.
+Glaive codefmt plugin[mappings]
+"if filereadable(expand("~/lib/google-java-format-1.3-all-deps.jar"))
+"Glaive codefmt google_java_executable="java -jar /home/ganadist/lib/google-java-format-1.3-all-deps.jar"
+"endif
+
+" Optional: Enable coverage's default mappings on the <Leader>C prefix.
+Glaive coverage plugin[mappings]
+" Optional: Enable syncopate's default mappings on the <Leader>< prefix.
+Glaive syncopate plugin[mappings]
 
 filetype plugin indent on
 
@@ -174,6 +206,18 @@ if has("autocmd")
     \| exe "normal g'\"" | endif
 endif
 
+augroup autoformat_settings
+  autocmd FileType bzl AutoFormatBuffer buildifier
+"  autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
+  autocmd FileType dart AutoFormatBuffer dartfmt
+  autocmd FileType go AutoFormatBuffer gofmt
+  autocmd FileType gn AutoFormatBuffer gn
+  autocmd FileType html,css,json AutoFormatBuffer js-beautify
+  "autocmd FileType java AutoFormatBuffer google-java-format
+  "autocmd FileType python AutoFormatBuffer yapf
+  autocmd FileType python AutoFormatBuffer autopep8
+augroup END<Paste>
+
 " makefile
 autocmd FileType make setlocal noexpandtab
 " make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
@@ -181,6 +225,7 @@ autocmd FileType python setlocal expandtab softtabstop=4 tabstop=4 shiftwidth=4 
 " c, cpp
 autocmd FileType c,cc,cpp,h,hh setlocal textwidth=79 fileformat=unix
 autocmd FileType java setlocal expandtab softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79 fileformat=unix
+autocmd FileType xml setlocal expandtab softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79 fileformat=unix
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " LAST SECTION

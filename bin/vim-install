@@ -1,7 +1,17 @@
 #!/bin/sh
-if [ ! -e ~/.vim/autoload/plug.vim ]; then
-  curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-fi
+# vim: ts=2 sw=2 sws=2 expandtab
+LOCAL_VIM_HOME=~.vim/
+LOCAL_NVIM_HOME=${XDG_CONFIG_HOME:-~/.config}/nvim
 
-exec vim +PlugUpgrade +PlugUpdate +qall
+for H in $LOCAL_VIM_HOME $LOCAL_NVIM_HOME
+do
+	if [ ! -e $H/autoload/plug.vim ]; then
+		curl -fLo $H/autoload/plug.vim --create-dirs \
+				https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	fi
+done
+
+ln -sf ~/vim $LOCAL_NVIM_HOME/init.vim
+
+/usr/bin/vim +PlugUpgrade +PlugUpdate +qall
+/usr/bin/nvim +PlugUpgrade +PlugUpdate +qall
