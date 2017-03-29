@@ -1,0 +1,22 @@
+#!/usr/bin/env python3
+# vim: ts=4 sw=4 expandtab nocindent
+
+import os
+import sys
+import shutil
+
+SRC_DIR = os.path.dirname(__file__)
+XDG_CONFIG_HOME = os.getenv('XDG_CONFIG_HOME') or os.path.join(
+    os.env['HONE'], '.config')
+USER_UNITS_DIR = os.path.join(XDG_CONFIG_HOME, 'systemd', 'user')
+
+
+def prepare(dest):
+    if not os.path.exists(USER_UNITS_DIR):
+        os.makedirs(USER_UNITS_DIR)
+    shutil.copy(os.path.join(SRC_DIR, 'unit', 'repo.timer'), USER_UNITS_DIR)
+    service_file = os.path.join(USER_UNITS_DIR, 'repo.service')
+    buf = open(os.path.join(SRC_DIR, 'repo.service.in')).read()
+    buf = buf.replace('%AOSP_MIRROR%', dest)
+    with open(os.path.join(service_file, 'w')) as fp:
+        fp.write(buf)

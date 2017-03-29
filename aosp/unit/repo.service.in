@@ -1,0 +1,13 @@
+[Unit]
+Description=Update Android MIrror
+
+[Service]
+Type=oneshot
+ExecStart=%AOSP_MIRROR%/repo_sync
+CPUSchedulingPolicy=batch
+Nice=19
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
+
+[Install]
+WantedBy=default.target

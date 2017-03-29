@@ -1,0 +1,172 @@
+#!/usr/bin/env python3
+# vim: ts=4 sw=4 sts=4 expandtab nocindent
+
+import os
+import sys
+import shutil
+import subprocess
+import tempfile
+from contextlib import contextmanager
+from xml.etree import ElementTree as ET
+
+MAX_RETRY = 3
+REPO_BIN = '/usr/local/bin/repo'
+MIRROR_BASE = '/home/ganadist/src/work/aosp/'
+MIRROR_DIRS = (
+    'mirror',
+    'mirror-partner',
+    'mirror-intel',
+)
+
+PARTNER_BRANCHES = (
+    'n-release-generic-fs-unstable-head',
+    'n-car-release-generic-fs-unstable-head',
+    'n-mr1-release-generic-fs-unstable-head',
+    #'o-release-generic-fs-unstable-head',
+)
+
+REMOTE = """
+  <remote fetch="../../../../.." name="ohd" review="https://partner-android.googlesource.com"/>
+  <default remote="ohd" revision="master" sync-j="4"/>
+"""
+
+HEADER = """<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+"""
+
+FOOTER = """
+</manifest>
+"""
+
+
+@contextmanager
+def mktemp():
+    pwd = os.getcwd()
+    dirname = tempfile.mkdtemp()
+    os.chdir(dirname)
+    yield dirname
+    os.chdir(pwd)
+    shutil.rmtree(dirname)
+
+
+@contextmanager
+def chdir(dirname):
+    pwd = os.getcwd()
+    os.chdir(dirname)
+    yield dirname
+    os.chdir(pwd)
+
+
+def get_output(cmd):
+	popen = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+	for line in popen.stdout:
+		yield line.strip().decode('utf-8')
+	if popen.wait() != 0:
+		raise OSError
+
+
+def git(*cmd):
+    cmd = ('git', ) + cmd
+    return '\n'.join(get_output(cmd))
+
+
+def git_show_file(branch, filename):
+    line = git('ls-tree', branch, filename)
+    mode, type, obj, name = line.split(None, 3)
+    return git('show', obj)
+
+
+def system(cmd):
+    return os.system(cmd) == 0
+
+
+def repo_sync(dirname):
+    SYNC_CMD = ' '.join((REPO_BIN, 'sync', '-j', '7', '-f'))
+    with chdir(dirname):
+        for i in range(MAX_RETRY):
+            if system(SYNC_CMD):
+                break
+        else:
+            print('max retry exceeded. abort')
+            return
+
+
+class Mirror(object):
+
+    def __init__(self, dirname):
+        self.dirname = os.path.join(MIRROR_BASE, dirname)
+
+    def prepare(self):
+        pass
+
+    def sync(self):
+        self.prepare()
+        repo_sync(self.dirname)
+
+    def link_mirror(self, mirrors):
+        if not mirrors:
+            return
+        ALTERNATES = 'objects/info/alternates'
+        with chdir(self.dirname):
+            for root, dirs, files in os.walk('.'):
+                if root.startswith('./.'):
+                    del dirs[:]
+                    continue
+                elif not root.endswith('.git'):
+                    continue
+                root = root[2:]
+                del dirs[:]
+                alternates = os.path.join(root, ALTERNATES)
+                for mirror in reversed(mirrors):
+                    obj = os.path.join(MIRROR_BASE, mirror, root, 'objects')
+                    if os.path.isdir(obj):
+                        with open(alternates, 'w') as f:
+                            f.write(obj + '\n')
+                        break
+
+
+def project(manifest):
+    et = ET.fromstring(manifest)
+    for p in et.findall('project'):
+        yield p.get('name')
+
+
+def generate(projects, out):
+	out.write(HEADER)
+	out.write(REMOTE)
+	for p in sorted(projects):
+		out.write('  <project name="' + p + '" />\n')
+	out.write(FOOTER)
+
+
+class PartnerMirror(Mirror):
+
+    def prepare(self):
+        REMOTE = 'origin'
+        MANIFEST_FILE = "default.xml"
+        projects = set()
+
+        dirname = os.path.join(self.dirname, '.repo', 'manifests')
+        with chdir(dirname):
+            git('reset', '--hard')
+            git('clean', '-f', '-d')
+            git('pull', '--rebase')
+            for branch in PARTNER_BRANCHES:
+                git('fetch', REMOTE, branch)
+                manifest = git_show_file(REMOTE + '/' + branch, MANIFEST_FILE)
+                projects.update(project(manifest))
+            with open(MANIFEST_FILE, 'w') as fp:
+                generate(projects, fp)
+
+
+def main():
+    for i, D in enumerate(MIRROR_DIRS):
+        if D == 'mirror-partner':
+            m = PartnerMirror(D)
+        else:
+            m = Mirror(D)
+        m.sync()
+        m.link_mirror(MIRROR_DIRS[:i])
+
+if __name__ == '__main__':
+    main()
