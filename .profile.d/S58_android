@@ -1,3 +1,6 @@
+# vim: syntax=sh ts=2 sw=2 sts=2 expandtab
+# see https://android.googlesource.com/platform/tools/idea/+/studio-master-dev/bin/scripts/unix/idea.sh
+
 ANDROID_HOME=${HOME}/tools/adt-bundle-linux-x86_64/sdk
 ANDROID_NDK_ROOT=${ANDROID_HOME}/ndk-bundle
 ANDROID_NDK_HOME=$ANDROID_NDK_ROOT
@@ -12,7 +15,7 @@ else
 fi
 
 find_studio_properties() {
-  local VER=(2.2 2.3 2.4 2.5)
+  local VER=(3.0 2.5 2.4 2.3)
   local PLATFORM=(.AndroidStudio .AndroidStudioPreview)
   local STUDIO_HOME P V
   for P in ${PLATFORM[@]}
