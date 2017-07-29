@@ -1,7 +1,7 @@
 #!/bin/sh
 # vim: ts=2 sw=2 sws=2 expandtab
-LOCAL_VIM_HOME=~.vim/
-LOCAL_NVIM_HOME=${XDG_CONFIG_HOME:-~/.config}/nvim
+LOCAL_VIM_HOME=${HOME}/.vim/
+LOCAL_NVIM_HOME=${XDG_CONFIG_HOME:-${HOME}/.config/}/nvim
 
 for H in $LOCAL_VIM_HOME $LOCAL_NVIM_HOME
 do
@@ -11,7 +11,7 @@ do
 	fi
 done
 
-ln -sf ~/vim $LOCAL_NVIM_HOME/init.vim
+ln -sf ~/.vimrc $LOCAL_NVIM_HOME/init.vim
 
 /usr/bin/vim +PlugUpgrade +PlugUpdate +qall
 /usr/bin/nvim +PlugUpgrade +PlugUpdate +qall
