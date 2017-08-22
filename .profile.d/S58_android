@@ -3,16 +3,23 @@
 
 ANDROID_HOME=${HOME}/tools/adt-bundle-linux-x86_64/sdk
 ANDROID_NDK_ROOT=${ANDROID_HOME}/ndk-bundle
-ANDROID_NDK_HOME=$ANDROID_NDK_ROOT
+ANDROID_NDK_HOME=${ANDROID_NDK_ROOT}
 ANDROID_EMULATOR_USE_SYSTEM_LIBS=1
 
-if [ -d /usr/lib/jvm/java-8-openjdk-amd64 ]; then
-  # ubuntu
-  STUDIO_JDK=/usr/lib/jvm/java-8-openjdk-amd64
-else
-  # archlinux
-  STUDIO_JDK=/usr/lib/jvm/java-8-jdk
-fi
+JRE_LIST=(/usr/lib/jvm/intellij-jdk
+  /usr/share/intellij-idea-ultimate-edition/jre64
+  /usr/lib/jvm/java-8-jdk
+  /usr/lib/jvm/java-8-openjdk
+  /usr/lib/jvm/java-7-jdk
+  /usr/lib/jvm/java-7-openjdk
+  /usr/lib/jvm/java-8-openjdk-amd64
+)
+
+for D in ${JRE_LIST[@]}
+do
+  [ -d ${D} ] && STUDIO_JDK=${D} && unset D && break
+done
+unset JRE_LIST
 
 find_studio_properties() {
   local VER=(3.0 2.5 2.4 2.3)
