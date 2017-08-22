@@ -1,0 +1,16 @@
+# vim: ts=2 sw=2 nocindent expandtab syntax=sh
+{
+(
+BUILD_GRADLE=build.gradle
+while [ $PWD != '/' ]
+do
+  if [ -f gradlew -a -f ${BUILD_GRADLE} ]; then
+    ./gradlew "$@"
+    exit $?
+  fi
+  cd ..
+done
+echo "cannot find ${BUILD_GRADLE}" && return 1
+)
+}
+
