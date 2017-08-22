@@ -1,4 +1,5 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
+# vim: set ts=4 sw=4 sts=4 et smarttab smartindent sta
 import sys
 import os
 import glob
@@ -23,7 +24,7 @@ def func(src, removeOnly=False):
         elif os.path.isfile(DEST):
             os.unlink(DEST)
         elif os.path.isdir(DEST):
-            print 'DEST file "%s" is directory. abort.' % DEST
+            print('DEST file "%s" is directory. abort.' % DEST)
             return False
         elif not os.path.exists(DEST):
             pass
@@ -59,17 +60,16 @@ if __name__ == '__main__':
             src = os.path.join(POWERLINE_FONT_DIR, filename)
             if os.access(dst, os.F_OK):
                 os.unlink(dst)
-	    try:
+            try:
                 os.symlink(src, dst)
-	    except:
-	        pass
+            except:
+                pass
 
     # ignore list
-    for F in ('install', 'README', '.git'):
+    for F in ('install', 'README', '.git', '.gitmodules', 'aosp'):
         files.remove(os.path.join(DIRNAME, F))
 
     for I in files:
         if not func(I, UNINSTALL):
             pass
 
-# vim: set ts=4 sw=4 sts=4 et smarttab smartindent sta
