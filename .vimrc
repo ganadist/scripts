@@ -104,9 +104,9 @@ let g:airline_symbols.linenr = ''
 
 " python
 "Bundle 'klen/python-mode'
-Plug 'python.vim'
-Plug 'python_match.vim'
-Plug 'pythoncomplete'
+"Plug 'python.vim'
+"Plug 'python_match.vim'
+"Plug 'pythoncomplete'
 
 " golang
 Plug 'fatih/vim-go'
@@ -122,7 +122,7 @@ Plug 'Shougo/neocomplcache'
 "Bundle 'Rip-Rip/clang_complete'
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdcommenter'
-Plug 'SearchComplete'
+"Plug 'SearchComplete'
 Plug 'easymotion/vim-easymotion'
 
 Plug 'google/vim-maktaba'
@@ -154,7 +154,7 @@ Plug 'majutsushi/tagbar'
 Plug 'mileszs/ack.vim'
 
 " Most Recently Used
-Plug 'mru.vim'
+"Plug 'mru.vim'
 
 Plug 'amix/open_file_under_cursor.vim'
 
