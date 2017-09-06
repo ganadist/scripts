@@ -66,7 +66,7 @@ if __name__ == '__main__':
                 pass
 
     # ignore list
-    for F in ('install', 'README', '.git', '.gitmodules', 'aosp'):
+    for F in ('install', 'README', '.git', '.gitmodules', 'aosp', 'systemd.unit'):
         files.remove(os.path.join(DIRNAME, F))
 
     for I in files:
