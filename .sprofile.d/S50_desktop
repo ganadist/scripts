@@ -1,0 +1,6 @@
+#!/bin/bash
+# vim: ts=2 sw=2 sts=2 et
+GTK_IM_MODULE=fcitx
+QT_IM_MODULE=fcitx
+XMODIFIERS=@im=fcitx
+sdenv GTK_IM_MODULE QT_IM_MODULE XMODIFIERS

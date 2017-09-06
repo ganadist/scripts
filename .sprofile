@@ -1,0 +1,15 @@
+# vim: ts=2 sw=2 sts=2 et syntax=sh
+[ -z ${SD_PROFILE_LOADED} ] || exit 0
+
+sdenv() {
+  export "$@"
+  systemctl --user import-environment "$@"
+}
+
+if [ -d ~/.sprofile.d ]; then
+  for profile in ~/.sprofile.d/S[0-9][0-9]*[^~] ; do
+	source $profile
+  done
+  SD_PROFILE_LOADED=1
+  unset profile
+fi
