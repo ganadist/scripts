@@ -1,4 +1,6 @@
-# vim: ts=2 sw=2 sts=2 syntax=sh
-find . -name .repo -prune -o -name .git -prune -o -path "./out*" -prune -o -name sepolicy -type d \
-        -exec grep --color -n -r --exclude-dir=\.git "$@" {} +
-
+# vim: ts=2 sw=2 sts=2 et syntax=sh
+find . -name .repo -prune \
+  -o -name .git -prune \
+  -o -path "./out*" -prune \
+  -o -name sepolicy -type d \
+  -exec grep --color -n -r --exclude-dir=\.git "$@" {} +

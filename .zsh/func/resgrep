@@ -1,5 +1,8 @@
-# vim: ts=2 sw=2 sts=2 syntax=sh
-for dir in `find . -name .repo -prune -o -name .git -prune -o -path "./out*" -prune -o -name res -type d`; do
+# vim: ts=2 sw=2 sts=2 et syntax=sh
+for dir in `find . -name .repo -prune \
+    -o -name .git -prune \
+    -o -path "./out*" -prune \
+    -o -name res -type d`; do
   find $dir -type f -name '*\.xml' -exec grep --color -n "$@" {} +
 done
 

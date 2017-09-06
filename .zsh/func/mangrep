@@ -1,3 +1,6 @@
-# vim: ts=2 sw=2 sts=2 syntax=sh
-find . -name .repo -prune -o -name .git -prune -o -path "./out*" -prune -o -type f -name 'AndroidManifest.xml' \
-        -exec grep --color -n "$@" {} +
+# vim: ts=2 sw=2 sts=2 et syntax=sh
+find . -name .repo -prune \
+  -o -name .git -prune \
+  -o -path "./out*" -prune \
+  -o -type f -name 'AndroidManifest.xml' \
+  -exec grep --color -n "$@" {} +
