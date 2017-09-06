@@ -1,3 +1,2 @@
-GOPATH=$HOME/src/work/gopath
 PATH=$GOPATH/bin:$PATH
-export GOPATH PATH
+export PATH
