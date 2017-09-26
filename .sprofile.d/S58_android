@@ -8,6 +8,7 @@ ANDROID_NDK_HOME=${ANDROID_NDK_ROOT}
 ANDROID_EMULATOR_USE_SYSTEM_LIBS=1
 
 JRE_LIST=(/usr/lib/jvm/intellij-jdk
+  /opt/intellij-idea-ultimate-edition/jre64
   /usr/share/intellij-idea-ultimate-edition/jre64
   /usr/lib/jvm/java-8-jdk
   /usr/lib/jvm/java-8-openjdk
