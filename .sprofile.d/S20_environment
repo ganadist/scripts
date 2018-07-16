@@ -1,5 +1,5 @@
 #!/bin/bash
-# vim: ts=2 sw=2 sts=2 et
+# vim: ts=2 sw=2 sts=2 et ai
 
 EMAIL="ganadist@gmail.com"
 FULLNAME="Young-Ho Cha"
@@ -19,8 +19,9 @@ MAIL="${HOME}/mail/inbox"
 CVS_RSH="ssh"
 CVSREAD=yes
 MANWIDTH=80
-EDITOR=vim
-VISUAL=vim
+
+EDITOR=$HOME/bin/vi
+VISUAL=$HOME/bin/vi
 
 INPUTRC="~/.inputrc"
 RLWRAP_HOME=~/.cache/rlwrap/
@@ -43,6 +44,9 @@ CTAGS="--c++-kinds=+p --fields=+iaS --extra=+q"
 
 #export CCACHE_DIR=$HOME/.ccache
 USE_CCACHE=1
+TMPDIR=${HOME}/tmp
+TMP=${TMPDIR}
+TEMP=${TMPDIR}
 
 sdenv \
   EMAIL FULLNAME IRCNICK IRCNAME MAIL \
@@ -56,3 +60,4 @@ sdenv \
   LESS_TERMCAP_so LESS_TERMCAP_ue LESS_TERMCAP_us \
 
 sdenv CTAGS USE_CCACHE
+sdenv TMPDIR TMP TEMP

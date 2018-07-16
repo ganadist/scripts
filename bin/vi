@@ -1,0 +1,9 @@
+#!/bin/bash
+# vim: ts=2 sw=2 sts=2 et ai
+if [ -n "$DISPLAY" -o -n "$WAYLAND_DISPLAY" ]; then
+  [ -f /usr/bin/oni ] && exec /usr/bin/oni "$@"
+fi
+for E in /usr/bin/nvim /usr/bin/vim /usr/bin/vi
+do
+  [ -f "$E" ] && exec $E "$@"
+done
