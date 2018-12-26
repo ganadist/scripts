@@ -235,3 +235,4 @@ if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
 set wrap
+set modelines=5

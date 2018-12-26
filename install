@@ -55,7 +55,7 @@ if __name__ == '__main__':
         POWERLINE_FONT_DIR = os.path.join(HOME, '.vim', 'bundle', 'powerline', 'font')
 
     # ignore list
-    for F in ('install', 'README', '.git', '.gitmodules', 'aosp', 'systemd.unit'):
+    for F in ('install', 'README', '.git', '.gitmodules', 'aosp', 'systemd.unit', '.vim'):
         files.remove(os.path.join(DIRNAME, F))
 
     for I in files:
