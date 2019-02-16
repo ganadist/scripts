@@ -3,9 +3,28 @@
 
 EMAIL="ganadist@gmail.com"
 FULLNAME="Young-Ho Cha"
+
+#DEBEMAIL=$EMAIL
+#DEBFULLNAME=$FULLNAME
+
+#GIT_AUTHOR_NAME=$FULLNAME
+#GIT_COMMITTER_NAME=$FULLNAME
+#GIT_AUTHOR_EMAIL=$EMAIL
+#GIT_COMMITTER_EMAIL=$EMAIL
+
 IRCNICK=${USERNAME}
 IRCNAME=${FULLNAME}
 MAIL="${HOME}/mail/inbox"
+
+CVS_RSH="ssh"
+CVSREAD=yes
+MANWIDTH=80
+EDITOR=vim
+VISUAL=vim
+
+INPUTRC="~/.inputrc"
+RLWRAP_HOME=~/.cache/rlwrap/
+
 
 # less options
 LESS=FRSX
@@ -24,6 +43,7 @@ CTAGS="--c++-kinds=+p --fields=+iaS --extra=+q"
 
 #export CCACHE_DIR=$HOME/.ccache
 USE_CCACHE=1
+
 TMPDIR=${HOME}/tmp
 TMP=${TMPDIR}
 TEMP=${TMPDIR}
@@ -47,7 +67,6 @@ if [ x"$HOSTNAME" = x ] ; then
 fi
 
 # path junk
-
 if [ $UID -eq 0 ]; then
   PATH=~root/bin:$PATH
 else
@@ -73,4 +92,3 @@ export TMPDIR TMP TEMP
 export HOME HOSTNAME
 export LIBXCB_ALLOW_SLOPPY_LOCK MOONLIGHT_OVERRIDES 
 export LD_LIBRARY_PATH PATH
-

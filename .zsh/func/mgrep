@@ -2,5 +2,5 @@
 find . -name .repo -prune \
   -o -name .git -prune \
   -o -path "./out*" -prune \
-  -o -regextype posix-egrep -iregex '(.*\/Makefile|.*\/Makefile\..*|.*\.make|.*\.mak|.*\.mk|.*\.bp|.*\/Kconfig)' -type f \
+  -o -regextype posix-egrep -iregex '(.*\/Makefile|.*\/Makefile\..*|.*\.make|.*\.mak|.*\.mk|.*\.bp|.*\/Kconfig|.*\.gradle|.*\.gradle.kts)' -type f \
   -exec grep --color -n "$@" {} +

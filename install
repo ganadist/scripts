@@ -9,6 +9,7 @@ DIRNAME = os.path.dirname(SELF)
 DIRNAME = os.path.abspath(DIRNAME)
 HOME = os.getenv('HOME')
 
+
 def mkdirs(path):
     if os.access(path, os.X_OK):
         return
@@ -36,6 +37,7 @@ def func(src, removeOnly=False):
         return False
     return True
 
+
 if __name__ == '__main__':
     UNINSTALL = '-u' in sys.argv
     # install hidden files
@@ -52,7 +54,8 @@ if __name__ == '__main__':
         os.system('bash -c %s' % VIM_INSTALL)
         FONT_CONF_D = os.path.join(HOME, '.config', 'fontconfig', 'conf.d')
         FONTS_DIR = os.path.join(HOME, '.fonts')
-        POWERLINE_FONT_DIR = os.path.join(HOME, '.vim', 'bundle', 'powerline', 'font')
+        POWERLINE_FONT_DIR = os.path.join(
+            HOME, '.vim', 'bundle', 'powerline', 'font')
 
     # ignore list
     for F in ('install', 'README', '.git', '.gitmodules', 'aosp', '.vim'):
@@ -61,4 +64,3 @@ if __name__ == '__main__':
     for I in files:
         if not func(I, UNINSTALL):
             pass
-
