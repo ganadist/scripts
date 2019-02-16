@@ -3,7 +3,7 @@
 if [ -n "$DISPLAY" -o -n "$WAYLAND_DISPLAY" ]; then
   [ -f /usr/bin/oni ] && exec /usr/bin/oni "$@"
 fi
-for E in /usr/bin/nvim /usr/bin/vim /usr/bin/vi
+for E in /usr/bin/nvim /usr/local/bin/nvim /usr/bin/vim /usr/bin/vi
 do
   [ -f "$E" ] && exec $E "$@"
 done

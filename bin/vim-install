@@ -14,4 +14,4 @@ done
 ln -sf ~/.vimrc $LOCAL_NVIM_HOME/init.vim
 
 /usr/bin/vim +PlugUpgrade +PlugUpdate +qall
-/usr/bin/nvim +PlugUpgrade +PlugUpdate +qall
+nvim +PlugUpgrade +PlugUpdate +qall

@@ -1,24 +1,76 @@
 #!/bin/zsh
+# vim: ts=2 sw=2 sts=2 et ai
+
+EMAIL="ganadist@gmail.com"
+FULLNAME="Young-Ho Cha"
+IRCNICK=${USERNAME}
+IRCNAME=${FULLNAME}
+MAIL="${HOME}/mail/inbox"
+
+# less options
+LESS=FRSX
+
+# this makes man pages look nicer...
+LESS_TERMCAP_mb=$'\E[01;31m'
+LESS_TERMCAP_md=$'\E[01;31m'
+LESS_TERMCAP_me=$'\E[0m'
+LESS_TERMCAP_se=$'\E[0m'
+LESS_TERMCAP_so=$'\E[01;44;33m'
+LESS_TERMCAP_ue=$'\E[0m'
+LESS_TERMCAP_us=$'\E[01;32m'
+
+# these are the default arguments to exuberant-ctags
+CTAGS="--c++-kinds=+p --fields=+iaS --extra=+q"
+
+#export CCACHE_DIR=$HOME/.ccache
+USE_CCACHE=1
+TMPDIR=${HOME}/tmp
+TMP=${TMPDIR}
+TEMP=${TMPDIR}
+
+CVS_RSH="ssh"
+CVSREAD=yes
+MANWIDTH=80
+
+EDITOR=$HOME/bin/vi
+VISUAL=$HOME/bin/vi
+
+INPUTRC="~/.inputrc"
+RLWRAP_HOME=~/.cache/rlwrap/
 
 if [ x"$HOME" = x ] ; then
-        export HOME=$(cd ~ ; pwd)
+  HOME=$(cd ~ ; pwd)
 fi
 
 if [ x"$HOSTNAME" = x ] ; then
-        export HOSTNAME=$(hostname)
+  HOSTNAME=$(hostname)
 fi
 
 # path junk
 
 if [ $UID -eq 0 ]; then
-        PATH=~root/bin:$PATH
+  PATH=~root/bin:$PATH
 else
-        PATH=${HOME}/bin:$PATH
+  PATH=${HOME}/bin:$PATH
 fi
 
 LD_LIBRARY_PATH=$HOME/lib:$LD_LIBRARY_PATH
 #LIBXCB_ALLOW_SLOPPY_LOCK=1
-MOONLIGHT_OVERRIDES="shapecache=yes,converter=ffmpeg"
+
+export \
+  EMAIL FULLNAME IRCNICK IRCNAME MAIL \
+  CVS_RSH CVSREAD MANWIDTH \
+
+export EDITOR VISUAL INPUTRC RLWRAP_HOME
+
+export \
+  LESS \
+  LESS_TERMCAP_mb LESS_TERMCAP_md LESS_TERMCAP_me LESS_TERMCAP_se \
+  LESS_TERMCAP_so LESS_TERMCAP_ue LESS_TERMCAP_us \
+
+export CTAGS USE_CCACHE
+export TMPDIR TMP TEMP
+export HOME HOSTNAME
 export LIBXCB_ALLOW_SLOPPY_LOCK MOONLIGHT_OVERRIDES 
 export LD_LIBRARY_PATH PATH
 

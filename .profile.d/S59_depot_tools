@@ -1,2 +1,0 @@
-PATH=$PATH:$HOME/src/build/depot_tools
-export PATH

@@ -13,24 +13,14 @@ fi
 alias du="du -hcs"
 alias df="df -h"
 
-alias btgui="btdownloadgui --max_upload_rate 2 --responsefile"
-alias btnc="btdownloadcurses --max_upload_rate 2 --responsefil"
-alias btm="btlaunchmanycurses"
-
-alias ls="ls --color=auto"
-alias ls="ls --color=auto"
-alias la="ls --color=always -a"
-alias ll="ls --color=always -l"
-alias lla="ls --color=always -la"
-alias lal="ls --color=always -la"
-
-alias tweet=bti
-
-alias rm='rm -i'
-alias mv='mv -i'
-
-alias ymd=yyyymmdd
-alias ymd-hms=yyyymmdd-hhmmss
+if [ $(uname -s) != Darwin ]; then
+  alias ls="ls --color=auto"
+  alias ls="ls --color=auto"
+  alias la="ls --color=always -a"
+  alias ll="ls --color=always -l"
+  alias lla="ls --color=always -la"
+  alias lal="ls --color=always -la"
+fi
 
 alias kver="wget http://www.kernel.org/kdist/finger_banner -O - 2> /dev/null"
 alias start="wine /usr/lib/wine/start.exe.so"

@@ -43,7 +43,7 @@ if __name__ == '__main__':
     files += glob.glob(os.path.join(DIRNAME, "*"))
 
     if not UNINSTALL:
-        cmd = 'wget --no-check-certificate https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh'
+        cmd = '$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)'
         # check ohmyzsh installation
         if not os.access(os.path.join(os.environ['HOME'], '.oh-my-zsh'), os.F_OK):
             os.system('bash -c "%s"' % cmd)
@@ -55,7 +55,7 @@ if __name__ == '__main__':
         POWERLINE_FONT_DIR = os.path.join(HOME, '.vim', 'bundle', 'powerline', 'font')
 
     # ignore list
-    for F in ('install', 'README', '.git', '.gitmodules', 'aosp', 'systemd.unit', '.vim'):
+    for F in ('install', 'README', '.git', '.gitmodules', 'aosp', '.vim'):
         files.remove(os.path.join(DIRNAME, F))
 
     for I in files:

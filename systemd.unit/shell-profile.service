@@ -1,9 +1,0 @@
-[Unit]
-Description=Load profile service for shell
-
-[Service]
-Type=oneshot
-ExecStart=/bin/bash /home/ganadist/.sprofile
-
-[Install]
-WantedBy=default.target

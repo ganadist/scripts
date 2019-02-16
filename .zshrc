@@ -1,3 +1,4 @@
+# vim: ts=2 sw=2 sts=2 et ai
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -29,9 +30,20 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-#plugins=(autojump gas git gnu-utils history-substring-search mercurial pip python screen ssh-agent svn vi-mode)
 
-plugins=(adb archlinux autojump docker gem gitfast history-substring-search mercurial pip python repo ruby screen svn sudo systemd vi-mode vim-interaction z)
+plugins=(adb command-not-found common-alias sudo vi-mode z zsh_reload)
+plugins=($plugins autojump history-substring-search dotenv)
+plugins=($plugins gem ruby pip python)
+plugins=($plugins repo git-fast mecurial svn)
+plugins=($plugins docker docker-compose)
+case $(uname -s) in
+  Linux)
+    plugins=($plugins archlinux systemd)
+    ;;
+  Darwin)
+    plugins=($plugins osx brew xcode)
+    ;;
+esac
 [ -z $SSH_AUTH_SOCK ] && plugins=($plugins ssh-agent)
 
 source $ZSH/oh-my-zsh.sh
