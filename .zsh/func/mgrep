@@ -4,5 +4,5 @@ find . -name .repo -prune \
   -o -name .externalNativeBuild -prune \
   -o -path "./out*" -prune \
   -o -path "*/build/*" -prune \
-  -o -type f \( -name "*.gradle" -o -name "*.gradle.kts" -o -name "Makefile*" -o -name "*.mk" -o -name "*.mak" \) \
+  -o -regextype posix-egrep -iregex '(.*\/Makefile|.*\/Makefile\..*|.*\.make|.*\.mak|.*\.mk|.*\.bp|.*\/Kconfig|.*\.gradle|.*\.gradle.kts)' -type f \
   -exec grep --color -n "$@" {} +

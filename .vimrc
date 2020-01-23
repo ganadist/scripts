@@ -181,7 +181,7 @@ if filereadable(expand("~/.vim/vimrc.fugitive"))
   source ~/.vim/vimrc.fugitive
 endif
 if filereadable(expand("~/.vim/vimrc.fzf"))
-  source ~/.vim/vimrc.f
+  source ~/.vim/vimrc.fzf
 endif
 
 set wrap

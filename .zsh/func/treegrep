@@ -2,5 +2,6 @@
 find . -name .repo -prune \
   -o -name .git -prune \
   -o -path "./out*" -prune \
+  -o -path "build" -prune \
   -o -regextype posix-egrep -iregex '.*\.(c|h|cpp|S|java|xml)' -type f \
   -exec grep --color -n -i "$@" {} +
