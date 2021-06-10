@@ -1,6 +1,8 @@
 # vim: ts=2 sw=2 sts=2 et syntax=sh
 find . -name .repo -prune \
   -o -name .git -prune \
+  -o -name .externalNativeBuild -prune \
   -o -path "./out*" -prune \
+  -o -path "*/build/*" -prune \
   -o -type f \( -name '*.java' -o -name '*.kt' \) \
   -exec grep --color -n "$@" {} +

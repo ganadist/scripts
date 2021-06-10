@@ -3,7 +3,7 @@
 # see https://android.googlesource.com/platform/tools/idea/+/studio-master-dev/platform/build-scripts/resources/linux/scripts/executable-template.sh
 
 ANDROID_SDK_ROOT=${HOME}/Library/Android/sdk
-ANDROID_NDK_ROOT=${ANDROID_HOME}/ndk-bundle
+ANDROID_NDK_ROOT=${ANDROID_SDK_ROOT}/ndk-bundle
 ANDROID_EMULATOR_USE_SYSTEM_LIBS=1
 
 ANDROID_HOME=${ANDROID_SDK_ROOT}
@@ -13,7 +13,7 @@ ANDROID_NDK_HOME=${ANDROID_NDK_ROOT}
 STUDIO_VM_OPTIONS="${HOME}/.studio64.vmoptions"
 STUDIO_PROPERTIES="$HOME/.idea.properties"
 
-PATH=${ANDROID_SDK_ROOT}/platform-tools:${HOME}/Library/Android/depot_tools:${ANDROID_SDK_ROOT}/build-tools/28.0.3:${PATH}
+PATH=${ANDROID_SDK_ROOT}/platform-tools:${HOME}/Library/Android/depot_tools:${ANDROID_SDK_ROOT}/build-tools/30.0.3:${PATH}
 #IBUS_ENABLE_SYNC_MODE=1
 
 export \

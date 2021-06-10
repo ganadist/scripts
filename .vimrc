@@ -102,6 +102,7 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
+Plug 'editorconfig/editorconfig-vim'
 " python
 "Bundle 'klen/python-mode'
 "Plug 'python.vim'
@@ -112,6 +113,9 @@ let g:airline_symbols.linenr = ''
 Plug 'fatih/vim-go'
 "Plug 'vim-jp/vim-go-extra'
 Plug 'google/vim-ft-go'
+
+" kotlin
+Plug 'udalov/kotlin-vim'
 
 " Bazel
 Plug 'bazelbuild/vim-bazel'
@@ -215,7 +219,7 @@ augroup autoformat_settings
   autocmd FileType html,css,json AutoFormatBuffer js-beautify
   "autocmd FileType java AutoFormatBuffer google-java-format
   "autocmd FileType python AutoFormatBuffer yapf
-  autocmd FileType python AutoFormatBuffer autopep8
+  "  autocmd FileType python AutoFormatBuffer autopep8
 augroup END<Paste>
 
 " makefile
@@ -225,7 +229,10 @@ autocmd FileType python setlocal expandtab softtabstop=4 tabstop=4 shiftwidth=4 
 " c, cpp
 autocmd FileType c,cc,cpp,h,hh setlocal textwidth=79 fileformat=unix
 autocmd FileType java setlocal expandtab softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79 fileformat=unix
+autocmd FileType kotlin setlocal expandtab softtabstop=4 tabstop=4 shiftwidth=4 textwidth=99 fileformat=unix
 autocmd FileType xml setlocal expandtab softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79 fileformat=unix
+" gradle, kts
+autocmd FileType gradle, kts setlocal expandtab softtabstop=4 tabstop=4 shiftwidth=4 textwidth=99 fileformat=unix
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " LAST SECTION

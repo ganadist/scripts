@@ -1,9 +1,25 @@
-#!/bin/bash
-# vim: ts=2 sw=2 sts=2 et ai
-if [ -n "$DISPLAY" -o -n "$WAYLAND_DISPLAY" ]; then
-  [ -f /usr/bin/oni ] && exec /usr/bin/oni "$@"
-fi
-for E in /usr/bin/nvim /usr/local/bin/nvim /usr/bin/vim /usr/bin/vi
-do
-  [ -f "$E" ] && exec $E "$@"
-done
+#!/usr/bin/env python3
+# vim: ts=4 sw=4 sts=4 et ai
+
+import os
+import sys
+
+VIM = ('/usr/bin/nvim', '/usr/local/bin/nvim', '/usr/bin/vim', '/usr/bin/vi')
+for executable in VIM:
+  if os.path.exists(executable):
+    break
+else:
+  sys.exit(1)
+
+args = []
+for a in sys.argv[1:]:
+    if ':' in a:
+        filename, lineno = a.split(':')[:2]
+        if os.path.exists(filename):
+            args.append(f'+{lineno}')
+            args.append(filename)
+            continue
+    args.append(a)
+
+cmd = (executable, ) + tuple(args)
+os.execlp(cmd[0], *cmd)

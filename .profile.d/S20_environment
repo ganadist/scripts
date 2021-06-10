@@ -1,8 +1,8 @@
 #!/bin/zsh
 # vim: ts=2 sw=2 sts=2 et ai
 
-EMAIL="ganadist@gmail.com"
-FULLNAME="Young-Ho Cha"
+EMAIL="ganachoco@linecorp.com"
+FULLNAME="YOUNG CHA"
 
 #DEBEMAIL=$EMAIL
 #DEBFULLNAME=$FULLNAME

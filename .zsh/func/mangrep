@@ -2,5 +2,6 @@
 find . -name .repo -prune \
   -o -name .git -prune \
   -o -path "./out*" -prune \
+  -o -path "*/build/*" -prune \
   -o -type f -name 'AndroidManifest.xml' \
   -exec grep --color -n "$@" {} +

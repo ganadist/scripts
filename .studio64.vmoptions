@@ -1,5 +1,5 @@
--Xms2048m
--Xmx8192m
--XX:MaxPermSize=512m
+-Xss2m
+-Xms8g
+-Xmx20g
 -XX:ReservedCodeCacheSize=512m
--Didea.max.intellisense.filesize=999999
+-Didea.max.intellisense.filesize=9999999

@@ -31,10 +31,10 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 
-plugins=(adb command-not-found common-alias sudo vi-mode z zsh_reload)
+plugins=(adb command-not-found sudo vi-mode z zsh_reload)
 plugins=($plugins autojump history-substring-search dotenv)
 plugins=($plugins gem ruby pip python)
-plugins=($plugins repo git-fast mecurial svn)
+plugins=($plugins repo svn)
 plugins=($plugins docker docker-compose)
 case $(uname -s) in
   Linux)

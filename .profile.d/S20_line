@@ -1,0 +1,4 @@
+LINE_ANDROID_REPO=~/AndroidStudioProjects/line-android
+CLONE_REPO_BASEDIR=~/AndroidStudioProjects
+
+export LINE_ANDROID_REPO CLONE_REPO_BASEDIR
