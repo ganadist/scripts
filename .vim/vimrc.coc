@@ -155,5 +155,22 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 
-let g:coc_global_extensions = ['coc-clangd', 'coc-cmake', 'coc-explorer', 'coc-fzf-preview', 'coc-git', 'coc-go', 'coc-highlight', 'coc-html', 'coc-java', 'coc-json', 'coc-marketplace', 'coc-prettier', 'coc-pyright', 'coc-sh', 'coc-symbol-line', 'coc-xml']
+let g:coc_global_extensions = [
+  \'coc-clangd',
+  \'coc-cmake',
+  \'coc-explorer',
+  \'coc-fzf-preview',
+  \'coc-git',
+  \'coc-go',
+  \'coc-highlight',
+  \'coc-html',
+  \'coc-java',
+  \'coc-json',
+  \'coc-marketplace',
+  \'coc-prettier',
+  \'coc-pyright',
+  \'coc-sh',
+  \'coc-symbol-line',
+  \'coc-xml'
+  \]
 
