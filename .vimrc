@@ -36,6 +36,8 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() }}
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Plug 'tpope/vim-sensible'
 
+Plug 'editorconfig/editorconfig-vim'
+
 " filemanagement
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -57,7 +59,7 @@ Plug 'fatih/vim-go'
 "Plug 'vim-jp/vim-go-extra'
 Plug 'google/vim-ft-go'
 
-" kotlin
+"Kotlin
 Plug 'udalov/kotlin-vim'
 
 " Bazel
@@ -149,7 +151,8 @@ augroup autoformat_settings
   autocmd FileType html,css,json AutoFormatBuffer js-beautify
   "autocmd FileType java AutoFormatBuffer google-java-format
   "autocmd FileType python AutoFormatBuffer yapf
-  "  autocmd FileType python AutoFormatBuffer autopep8
+  autocmd FileType python AutoFormatBuffer autopep8
+  autocmd FileType Jenkinsfile set syntax=groovy
 augroup END<Paste>
 
 " makefile

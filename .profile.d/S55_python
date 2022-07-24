@@ -1,5 +1,0 @@
-#!/bin/bash
-# vim: ts=2 sw=2 sts=2 et
-PYTHONSTARTUP=$HOME/.pythonstartup.py
-PYTHONUSERBASE=$HOME
-export PYTHONSTARTUP PYTHONUSERBASE

@@ -74,3 +74,7 @@ PATH_BASE=$PATH
 HISTSIZE=5000
 SAVEHIST=5000
 
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/ganadist/.sdkman"
+[[ -s "/home/ganadist/.sdkman/bin/sdkman-init.sh" ]] && source "/home/ganadist/.sdkman/bin/sdkman-init.sh"

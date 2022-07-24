@@ -1,5 +1,5 @@
 # vim: ts=2 sw=2 sts=2 et ai
-
+#set -x
 [ -f /etc/profile.d/vte.sh ] && source /etc/profile.d/vte.sh
 
 # workaround for 
