@@ -12,6 +12,10 @@ call plug#begin('~/.vim/plugged')
 "  source ~/.vim_bundles.local
 "endif
 
+Plug 'github/copilot.vim'
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Fugitive
 "
@@ -19,34 +23,11 @@ call plug#begin('~/.vim/plugged')
 " check :help Gstatus for more keys
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Plug 'tpope/vim-fugitive'
+Plug 'lambdalisue/gina.vim'
+Plug 'sharkdp/bat'
+Plug 'ryanoasis/vim-devicons'
 
-map <leader>gs :Gstatus<cr>
-map <leader>gc :Gcommit<cr>
-map <leader>ga :Git add --all<cr>:Gcommit<cr>
-map <leader>gb :Gblame<cr>
-
-" Use j/k in status
-function! BufReadIndex()
-  setlocal cursorline
-  setlocal nohlsearch
-
-  nnoremap <buffer> <silent> j :call search('^#\t.*','W')<Bar>.<CR>
-  nnoremap <buffer> <silent> k :call search('^#\t.*','Wbe')<Bar>.<CR>
-endfunction
-autocmd BufReadCmd  *.git/index exe BufReadIndex()
-autocmd BufEnter    *.git/index silent normal gg0j
-
-" Start in insert mode for commit
-function! BufEnterCommit()
-  normal gg0
-  if getline('.') == ''
-    start
-  end
-endfunction
-autocmd BufEnter    *.git/COMMIT_EDITMSG  exe BufEnterCommit()
-
-" Automatically remove fugitive buffers
-autocmd BufReadPost fugitive://* set bufhidden=delete
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() }}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Sensible
@@ -69,45 +50,7 @@ Plug 'airblade/vim-gitgutter'
 "Bundle 'powerline/powerline'
 "set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
 Plug 'bling/vim-airline'
-let g:airline#extensions#tabline#enabled=1
-let g:airline_detect_modified=1
-let g:airline_detect_paste=1
-let g:airline_powerline_fonts=0
-let g:airline_inactive_collapse=1
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-
-" unicode symbols
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.crypt = '🔒'
-let g:airline_symbols.linenr = '␊'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.whitespace = 'Ξ'
-
-" powerline symbols
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
-
 Plug 'editorconfig/editorconfig-vim'
-" python
-"Bundle 'klen/python-mode'
-"Plug 'python.vim'
-"Plug 'python_match.vim'
-"Plug 'pythoncomplete'
 
 " golang
 Plug 'fatih/vim-go'
@@ -122,11 +65,8 @@ Plug 'bazelbuild/vim-bazel'
 Plug 'bazelbuild/vim-ft-bzl'
 
 " completion
-Plug 'Shougo/neocomplcache'
-"Bundle 'Rip-Rip/clang_complete'
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdcommenter'
-"Plug 'SearchComplete'
 Plug 'easymotion/vim-easymotion'
 
 Plug 'google/vim-maktaba'
@@ -145,22 +85,12 @@ Plug 'google/vim-syncopate'
 " Bundle 'Raimondi/delimitMate'
 
 " color
-"Plug 'sjl/badwolf'
-"Plug 'altercation/vim-colors-solarized'
-"Plug 'tomasr/molokai'
-"Plug 'zaiste/Atom'
-"Plug 'w0ng/vim-hybrid'
 Plug 'google/vim-colorscheme-primary'
 
 " tagbar
 Plug 'majutsushi/tagbar'
 
 Plug 'mileszs/ack.vim'
-
-" Most Recently Used
-"Plug 'mru.vim'
-
-Plug 'amix/open_file_under_cursor.vim'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -241,5 +171,30 @@ autocmd FileType gradle, kts setlocal expandtab softtabstop=4 tabstop=4 shiftwid
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
+if filereadable(expand("~/.vim/vimrc.coc"))
+  source ~/.vim/vimrc.coc
+endif
+if filereadable(expand("~/.vim/vimrc.airline"))
+  source ~/.vim/vimrc.airline
+endif
+if filereadable(expand("~/.vim/vimrc.fugitive"))
+  source ~/.vim/vimrc.fugitive
+endif
+if filereadable(expand("~/.vim/vimrc.fzf"))
+  source ~/.vim/vimrc.f
+endif
+
 set wrap
 set modelines=5
+
+let g:copilot_filetypes = {
+    \ '*': v:false,
+    \ 'vim': v:true,
+    \ 'gradle': v:true,
+    \ 'groovy': v:true,
+    \ 'kotlin': v:true,
+    \ 'kts': v:true,
+    \ 'java': v:true,
+    \ 'python': v:true,
+    \ 'sh': v:true,
+    \ }
