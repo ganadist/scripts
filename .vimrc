@@ -2,6 +2,7 @@ set nocompatible
 filetype on
 filetype off
 
+let mapleader = '\'
 call plug#begin('~/.vim/plugged')
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

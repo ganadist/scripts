@@ -1,7 +1,24 @@
 # vim: ts=2 sw=2 sts=2 et syntax=sh
-find . -name .repo -prune \
-  -o -name .git -prune \
-  -o -path "./out*" -prune \
-  -o -path "build" -prune \
-  -o -regextype posix-egrep -iregex '.*\.(c|h|cpp|S|java|xml)' -type f \
-  -exec grep --color -n -i "$@" {} +
+
+local EXCLUDE_OPTIONS=(
+     -name .git -prune
+  -o -name .gradle -prune
+  -o -name .idea -prune
+  -o -name .externalNativeBuild -prune
+  -o -path '*/build/*' -prune
+  -o -path './out/*' -prune
+  -o -name .repo -prune
+  -o -type f \
+)
+
+if [ $(uname) = "Darwin" ]; then
+  find -E . \
+    ${EXCLUDE_OPTIONS[@]} \
+    -iregex '.*\.(c|h|cpp|S|kt|java|xml)' \
+    -exec grep --color -n "$@" {} +
+else
+  find . \
+    ${EXCLUDE_OPTIONS[@]} \
+    -regextype posix-egrep -iregex '.*\.(c|h|cpp|S|kt|java|xml)'
+    -exec grep --color -n "$@" {} +
+fi

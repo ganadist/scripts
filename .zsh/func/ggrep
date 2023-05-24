@@ -6,5 +6,5 @@ find . -name .repo -prune \
   -o -name .idea -prune \
   -o -name .externalNativeBuild -prune \
   -o -path "*/build/*" -prune \
-  -o -type f \( -name '*.java' -o -name '*.kt' \) \
+  -o -type f \( -name '*.gradle' -o -name '*.gradle.kts' \) \
   -exec grep --color -n "$@" {} +

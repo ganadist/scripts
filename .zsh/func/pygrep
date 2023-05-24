@@ -1,0 +1,10 @@
+# vim: ts=2 sw=2 sts=2 et syntax=sh
+find . \
+    -name .repo -prune -o \
+    -name .git -prune -o \
+    -name .gradle -prune -o \
+    -name .idea -prune -o \
+    -name out -prune -o \
+    -name build -prune -o \
+    -type f -name "*\.py" \
+    -exec grep --color -n "$@" {} +

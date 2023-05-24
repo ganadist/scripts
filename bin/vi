@@ -4,7 +4,7 @@
 import os
 import sys
 
-VIM = ('/usr/bin/nvim', '/usr/local/bin/nvim', '/usr/bin/vim', '/usr/bin/vi')
+VIM = ('/usr/bin/nvim', '/opt/homebrew/bin/nvim', '/usr/local/bin/nvim', '/usr/bin/vim', '/usr/bin/vi')
 for executable in VIM:
   if os.path.exists(executable):
     break
@@ -22,4 +22,5 @@ for a in sys.argv[1:]:
     args.append(a)
 
 cmd = (executable, ) + tuple(args)
+print(f'execute {cmd}')
 os.execlp(cmd[0], *cmd)

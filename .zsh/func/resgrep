@@ -1,10 +1,12 @@
 # vim: ts=2 sw=2 sts=2 et syntax=sh
-for dir in `find . -name .repo -prune \
-    -o -name .git -prune \
-    -o -name .externalNativeBuild -prune \
-    -o -path "./out*" -prune \
-    -o -path "*/build/*" -prune \
-    -o -name res -type d`; do
-  find $dir -type f -name '*\.xml' -exec grep --color -n "$@" {} +
-done
 
+for dir in `find . -name .repo -prune -o \
+    -name .git -prune -o \
+    -name .externalNativeBuild -prune -o \
+    -name .gradle -prune -o \
+    -name .idea -prune -o \
+    -path "./out*" -prune -o \
+    -path "*/build/*" -prune -o \
+    -name res -type d`; do
+  find $dir -path "*/build/*" -prune -o -type f -name '*\.xml' -exec grep --color -n "$@" {} +
+done

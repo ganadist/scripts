@@ -1,3 +1,5 @@
+# Fig pre block. Keep at the top of this file.
+[[ -f "$HOME/.fig/shell/profile.pre.bash" ]] && . "$HOME/.fig/shell/profile.pre.bash"
 # vim: ts=2 sw=2 sts=2 et ai
 #set -x
 [ -f /etc/profile.d/vte.sh ] && source /etc/profile.d/vte.sh
@@ -16,3 +18,11 @@ do
 done
 #systemctl --user import-environment PATH
 
+
+
+ANDROID_SDK_ROOT=$HOME/Library/Android/sdk
+PATH=$ANDROID_SDK_ROOT/platform-tools:$PATH
+export ANDROID_SDK_ROOT PATH
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/profile.post.bash" ]] && . "$HOME/.fig/shell/profile.post.bash"
