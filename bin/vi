@@ -13,6 +13,8 @@ else:
 
 args = []
 for a in sys.argv[1:]:
+    if a.startswith("file://"):
+        a = a[7:]
     if ':' in a:
         filename, lineno = a.split(':')[:2]
         if os.path.exists(filename):
