@@ -6,11 +6,17 @@ while [ $PWD != '/' ]
 do
   if [ -f gradlew -a -f ${BUILD_GRADLE} ]; then
     ./gradlew "$@"
-    exit $?
+    break
   fi
   cd ..
 done
-echo "cannot find ${BUILD_GRADLE}" && return 1
-)
+echo "cannot find ${BUILD_GRADLE}. Perform gradle from OS" && false
+) || (
+for GRADLE_BIN in /opt/homebrew/bin/gradle /usr/bin/gradle
+do
+  ${GRADLE_BIN} "$@"
+  break
+done
+false
+) || echo "cannot find gradle executable"
 }
-
