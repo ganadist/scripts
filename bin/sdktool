@@ -1,0 +1,23 @@
+#!/bin/bash
+# vim: ts=2 sw=2 sts=2 et ai
+
+CMDLINE_VERSION=17.0
+BUILDTOOLS_VERSION=35.0.0
+NDK_VERSION=27.1.12297006
+TOOL=$(basename $0)
+if [ "$TOOL" = "sdktool" ]; then
+  TOOL=$(basename $1)
+  shift 1
+fi
+
+export JAVA_HOME=${JAVA_HOME:-/Library/Java/JavaVirtualMachines/default/Contents/Home}
+
+for BINDIR in platform-tools cmdline-tools/${CMDLINE_VERSION}/bin build-tools/${BUILDTOOLS_VERSION} ndk/${NDK_VERSION} tools tools/bin
+do
+  if [ -x "${ANDROID_SDK_ROOT}/${BINDIR}/${TOOL}" ]; then
+    exec "${ANDROID_SDK_ROOT}/${BINDIR}/${TOOL}" "$@"
+  fi
+done
+
+echo "Cannot find tool: $TOOL"
+exit 1
