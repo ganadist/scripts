@@ -1,4 +1,5 @@
 # vim: ts=2 sw=2 sts=2 et ai
+
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -32,7 +33,7 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 
 plugins=(adb command-not-found sudo vi-mode z)
-plugins=($plugins autojump history-substring-search dotenv)
+plugins=($plugins history-substring-search dotenv)
 plugins=($plugins gem ruby pip python)
 plugins=($plugins repo svn)
 plugins=($plugins docker docker-compose)
@@ -41,7 +42,7 @@ case $(uname -s) in
     plugins=($plugins archlinux systemd)
     ;;
   Darwin)
-    plugins=($plugins osx brew xcode)
+    plugins=($plugins macos brew xcode)
     ;;
 esac
 [ -z $SSH_AUTH_SOCK ] && plugins=($plugins ssh-agent)
@@ -75,6 +76,8 @@ HISTSIZE=5000
 SAVEHIST=5000
 
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/ganadist/.sdkman"
-[[ -s "/home/ganadist/.sdkman/bin/sdkman-init.sh" ]] && source "/home/ganadist/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
